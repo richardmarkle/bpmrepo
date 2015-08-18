@@ -1,0 +1,25 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+
+[
+  //  Authentication work item	
+  // Source  ROS  LQ  or LC CBRAS     BRAS ALU  LC  
+  [
+    "name" : "Authentication",
+    "parameters" : [
+      "forceRefresh" : new BooleanDataType()
+    ],
+    "results" : [
+       "isErrored" : new BooleanDataType(),
+       "sourceSystem"  : new StringDataType(), // ROS BRAS ALU
+       "isAuthenticated" : new BooleanDataType(), // Is the customer authenticated
+       "wanIP" : new StringDataType(), // IP address assigned to the customer for the internet session
+       "sessionStartTime" : new StringDataType(),
+       "macAddress" : new StringDataType(), // MAC address of the customer s modem   
+       "authenticatedUserName" : new StringDataType() // ppp username  WTN with which the user is authenticated in RADIUS server
+     ], 
+    "displayName" : "Authentication",
+    "icon" : "icons/authentication.gif"
+  ]
+]

@@ -1,0 +1,22 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+
+[
+  //  ASSIABasics work item
+  [
+    "name" : "ASSIABasics",
+    "parameters" : [
+    ],
+    "results" : [
+       "isErrored" : new BooleanDataType(),
+       "supported" : new BooleanDataType(), // Is the line supported        
+       "monitored" : new BooleanDataType(), // Is the line monitored by ASSIA
+       "optimized" : new BooleanDataType(), // Is the line optimized by ASSIA
+       "lineStability" : new StringDataType(), //Very Stable, Stable, Unstable, Very Unstable  
+       "optimizerStartTime" : new StringDataType(), // 
+       "optimizerEndTime" : new StringDataType(), // 
+   ], 
+    "displayName" : "ASSIA Basics",
+    "icon" : "icons/assia.gif"
+  ]
+]

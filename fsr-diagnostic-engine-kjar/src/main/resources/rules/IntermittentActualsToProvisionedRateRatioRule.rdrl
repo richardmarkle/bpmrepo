@@ -1,0 +1,33 @@
+package com.bpm.fsr.rules;
+
+import com.bpm.fsr.model.AcceptableRatesRuleFact;
+
+rule "IntermittentActualsToProvisionedRateRatioRule1"
+	dialect "mvel"
+	ruleflow-group "ActualsToProvisionedRateRatioRule"
+	no-loop true
+	    when
+ 			acceptableRatesRuleFact : AcceptableRatesRuleFact( isProvisionedRatesPresent == true, isActualRatesPresent == true, provisionedRateDown != null, provisionedRateUP != null, ( actualRateDown >= (0.8 * provisionedRateDown)) == true, (actualRateUP >= (0.8 * provisionedRateUP)) == true)
+ 	    then
+	    	acceptableRatesRuleFact.setPath( "greater" );
+end
+
+rule "IntermittentActualsToProvisionedRateRatioRule2"
+	dialect "mvel"
+	ruleflow-group "ActualsToProvisionedRateRatioRule"
+	no-loop true
+	    when
+ 			acceptableRatesRuleFact : AcceptableRatesRuleFact( isProvisionedRatesPresent == true, isActualRatesPresent == true, provisionedRateDown != null, ( actualRateDown < (0.8 * provisionedRateDown)) == true )
+ 	    then
+	    	acceptableRatesRuleFact.setPath( "lesser" );
+end
+
+rule "IntermittentActualsToProvisionedRateRatioRule3"
+	dialect "mvel"
+	ruleflow-group "ActualsToProvisionedRateRatioRule"
+	no-loop true
+	    when
+ 			acceptableRatesRuleFact : AcceptableRatesRuleFact( isProvisionedRatesPresent == true, isActualRatesPresent == true, provisionedRateUP != null, (actualRateUP < (0.8 * provisionedRateUP)) == true)
+ 	    then
+	    	acceptableRatesRuleFact.setPath( "lesser" );
+end

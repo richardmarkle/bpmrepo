@@ -1,0 +1,23 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+
+[
+ 
+    [
+    "name" : "CustomerWarranty",
+    "results" : [
+       "isUnderWarranty" : new BooleanDataType(),
+     ], 
+    "displayName" : "Customer Warranty",
+    "icon" : "defaultservicenodeicon.png"
+  ],
+  
+  [
+    "name" : "ModemWarranty",
+    "results" : [
+       "isModemUnderWarranty" : new BooleanDataType(),
+     ], 
+    "displayName" : "ModemWarranty",
+    "icon" : "icons/ModemWarranty.gif"
+  ]
+]

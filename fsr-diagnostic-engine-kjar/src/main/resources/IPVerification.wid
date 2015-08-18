@@ -1,0 +1,19 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+
+[
+  //  Validate if ipTocompare falls in between start ip and end ip
+  [
+    "name" : "IPVerification",
+    "parameters" : [
+    	"startIP" : new StringDataType(),
+    	"endIP" : new StringDataType(),
+    	"ipTocompare" : new StringDataType(),
+    ],
+    "results" : [
+       "ipInRange" : new BooleanDataType()
+       ], 
+    "displayName" : "IPVerification",
+    "icon" : "icons/icl-static-ip.gif"
+  ]
+]

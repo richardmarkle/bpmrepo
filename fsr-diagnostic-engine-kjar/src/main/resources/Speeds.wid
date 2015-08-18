@@ -1,0 +1,20 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+
+[
+  //  Speeds work item
+  //  
+  [
+    "name" : "Speeds",
+    "results" : [
+       "isErrored" : new BooleanDataType(),
+       "purchasedSpeedAvailable" : new BooleanDataType(),
+       "purchasedSpeedUp" : new IntegerDataType(),
+  	   "purchasedSpeedDown" : new IntegerDataType(),
+     ], 
+    "displayName" : "Speeds",
+    "icon" : "icons/speeds.gif"
+  ]
+]
+

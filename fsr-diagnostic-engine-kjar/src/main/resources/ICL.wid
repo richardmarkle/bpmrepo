@@ -1,0 +1,24 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+
+[
+  //  Inventory data
+  // Source  MARTENS ARM 
+  [
+    "name" : "ICL",
+    "results" : [
+       "sourceSystem"  : new StringDataType(), // MARTENS ARM
+       "translated" : new BooleanDataType(), // Is TRanslated only for CRIS
+       "isVPIVCIPresent" : new BooleanDataType(), // VPI VCI VLAN present
+       "subscriberVPI" : new StringDataType(), // Subscriber VPI
+       "subscriberVCI" : new StringDataType(), // Subscriber VCI
+       "subscriberVLAN" : new StringDataType(), //Subscriber  VLAN
+       "networkVPI" : new StringDataType(), // Network VPI
+       "networkVCI" : new StringDataType(), //  Network VCI
+       "networkVLAN" : new StringDataType(), // Network VLAN
+     ], 
+    "displayName" : "ICL",
+    "icon" : "icons/icl.gif"
+  ]
+]

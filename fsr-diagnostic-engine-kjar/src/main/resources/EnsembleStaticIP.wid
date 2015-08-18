@@ -1,0 +1,22 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+import org.drools.core.process.core.datatype.impl.type.ListDataType; 
+
+[
+  //  Ensemble Static Ip info
+  //  Source Ensemble Product Info webservice
+  [
+    "name" : "EnsembleStaticIP",
+    "results" : [
+       "isErrored" : new BooleanDataType(),
+       "hasStaticIP" : new BooleanDataType(),
+       "IPQuantity" : new IntegerDataType(), // Number of IP addresses
+       "startIP" : new StringDataType(), // First IP address in case of a block If customer has single static IP then this field will contain that IP address
+       "endIP" : new StringDataType(), 
+       "ipAddressList" : new ListDataType() // All IP address assigned to customer in case of a block of static IP For customer with single IP the value will be in startIP
+       ], 
+    "displayName" : "Ensemble Static IP",
+    "icon" : "icons/ensstatic-ip.gif"
+  ]
+]

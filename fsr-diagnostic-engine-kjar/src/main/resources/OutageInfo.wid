@@ -1,0 +1,31 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
+ 
+[
+  // the KnownOutages work item
+  [
+    "name" : "KnownOutages",
+    "parameters" : [
+    ],
+    "results" : [
+       "isErrored" : new BooleanDataType(),
+       "outageExists" : new BooleanDataType(), // Is there an Active / currently service-affecting outage for the TN. Other 3 fields are for the highest correlated outage for the TN (Priority given to HSI product)
+       "outageId" : new StringDataType(), // within our Java code, it's a Long 849372
+       "outageType" : new StringDataType(), //  {DSL, PRISM, ATM, HSDNetwork, ...}
+       "outageStatus" : new StringDataType(), // {Initial, Update, Final, Informational}
+       "productAffected" : new StringDataType(), // { HSI, POTS, VoiceMail, Prism }
+           "eta" : new ObjectDataType(), // Estimated Time of Arrival
+           "etr" : new ObjectDataType(), // Estimated Time of Restoral
+           "startTime" : new ObjectDataType(), // Outage Start time
+           "endTime" : new ObjectDataType(),   // Outage End time
+           "description" : new StringDataType(), // Outage Description
+           "customerImpact" : new StringDataType(), // Outage customer impact
+           "ticketingInstruction" : new StringDataType(), // Ticketing Instruction
+           "isCongestionOutagePresent" : new BooleanDataType()   
+     ], 
+    "displayName" : "Known Outages",
+    "icon" : "icons/defaultservicenodeicon.png"
+  ]
+]

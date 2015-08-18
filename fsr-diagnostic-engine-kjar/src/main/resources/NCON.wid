@@ -1,0 +1,22 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+
+[
+  // NCON work item  Used for LQ GPON Cross connect check
+  [
+    "name" : "NCON",
+    "parameters" : [
+      "forceRefresh" : new BooleanDataType()
+    ],
+    "results" : [
+       "crossConnectOK" : new BooleanDataType(), // Is cross connect OK based on ACTST CKTST NWKST  values 
+  	   "equipmentID"  : new StringDataType() , 
+  	   "locationID"  : new StringDataType() ,
+  	   "equipmentIP"   : new StringDataType(),
+  	   "gpoinAid"  : new StringDataType()       
+     ], 
+    "displayName" : "NCON",
+    "icon" : "icons/ncon.gif"
+  ],
+]

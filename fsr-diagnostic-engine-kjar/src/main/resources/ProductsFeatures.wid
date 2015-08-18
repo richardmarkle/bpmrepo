@@ -1,0 +1,24 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+
+[
+  //  Products and features  work item
+  //  Assumes that the flow is initiated within a product focus and the features are for the current product
+  [
+    "name" : "ProductsFeatures",
+    "results" : [
+       "isErrored" : new BooleanDataType(),
+       "hasPRISMonAccount" : new BooleanDataType(), 
+       "hasGPON" : new BooleanDataType(),
+       "isMadisonRiverCustomer" : new BooleanDataType(), // MR customer Special troubleshooting steps apply for MR
+  	   "hasAtEaseFeature" : new BooleanDataType() ,  // Has the customer purchased Ease service
+  	   "atEaseLevel" : new StringDataType(), // At Ease level
+  	   "hasTechInstallUSOC" :  new BooleanDataType(),
+  	   "marketUnit" : new StringDataType(), // Residential Business Wholesale
+  	   "accessTech" : new StringDataType(), // ADSL/VDSL2 ADSL2PB VDSL2PB
+     ], 
+    "displayName" : "Products and Features",
+    "icon" : "icons/products.gif"
+  ]
+]

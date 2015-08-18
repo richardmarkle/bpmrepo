@@ -1,0 +1,25 @@
+package com.bpm.fsr.rules;
+
+import com.bpm.fsr.model.ModemProtocolRuleFact;
+
+rule "ModemProtocolENSPPPoENotStickyStaticIPRule"
+	dialect "mvel"
+	ruleflow-group "ModemProtocolRule"
+	no-loop true
+	    when
+ 			modemProtocolRuleFact : ModemProtocolRuleFact( legacyMarket == "Ensemble" , protocol not in ("IPoE", "DHCP"), martensStaticIPpresent == false, iclIPQty == 0 )
+ 	    then
+	    	modemProtocolRuleFact.setlENSPPPoE( true );
+	    
+end
+
+rule "ModemProtocolENSPPPoEStickyStaticIPRule"
+	dialect "mvel"
+	ruleflow-group "ModemProtocolRule"
+	no-loop true
+	    when
+ 			modemProtocolRuleFact : ModemProtocolRuleFact( legacyMarket == "Ensemble" , protocol not in ("IPoE", "DHCP"), martensStaticIPpresent == true, iclIPQty > 0 )
+ 	    then
+	    	modemProtocolRuleFact.setlENSPPPoE( true );
+	    
+end

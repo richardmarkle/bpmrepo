@@ -1,0 +1,20 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+import org.drools.core.process.core.datatype.impl.type.ListDataType; 
+
+[
+  [
+    "name" : "StaticIP",
+    "results" : [
+       "isErrored" : new BooleanDataType(),
+       "hasStaticIP" : new BooleanDataType(),
+       "IPQuantity" : new IntegerDataType(), // Number of IP addresses
+       "startIP" : new StringDataType(), // First IP address in case of a block If customer has single static IP then this field will contain that IP address
+       "endIP" : new StringDataType(),
+       "ipAddressList" : new ListDataType() // All IP address assigned to customer in case of a block of static IP For customer with single IP the value will be in startIP
+       ], 
+    "displayName" : "StaticIP",
+    "icon" : "icons/static-ip.gif"
+  ]
+]

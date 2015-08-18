@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:drools="http://www.jboss.org/drools" xmlns="http://www.jboss.org/drools" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd http://www.jboss.org/drools drools.xsd http://www.bpsim.org/schemas/1.0 bpsim.xsd" id="Definitions_1" targetNamespace="http://www.jboss.org/drools">
+  <bpmn2:itemDefinition id="_String" structureRef="String"/>
+  <bpmn2:itemDefinition id="ItemDefinition_1" structureRef="StringDataType"/>
+  <bpmn2:itemDefinition id="ItemDefinition_2" structureRef="BooleanDataType"/>
+  <bpmn2:itemDefinition id="_Boolean" structureRef="Boolean"/>
+  <bpmn2:itemDefinition id="ItemDefinition_3" structureRef="ObjectDataType"/>
+  <bpmn2:process id="com.bpm.fsr.process.subprocess.knownOutage" drools:version="1" drools:packageName="com.bpm.fsr.process.subprocess" drools:adHoc="false" name="knownOutage" isExecutable="true">
+    <bpmn2:property id="agentName" itemSubjectRef="_String"/>
+    <bpmn2:property id="outageType" itemSubjectRef="_String"/>
+    <bpmn2:property id="outageId" itemSubjectRef="_String"/>
+    <bpmn2:property id="outageStatus" itemSubjectRef="_String"/>
+    <bpmn2:property id="productAffected" itemSubjectRef="_String"/>
+    <bpmn2:property id="outageExists" itemSubjectRef="_Boolean"/>
+    <bpmn2:property id="processMock" itemSubjectRef="_String"/>
+    <bpmn2:property id="legacyMarket" itemSubjectRef="_String"/>
+    <bpmn2:property id="product" itemSubjectRef="_String"/>
+    <bpmn2:property id="raiseTicket" itemSubjectRef="_Boolean"/>
+    <bpmn2:property id="knowOutageFlowCompleted" itemSubjectRef="_Boolean"/>
+    <bpmn2:property id="path" itemSubjectRef="_String"/>
+    <bpmn2:startEvent id="StartEvent_1" name="">
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" drools:priority="1" name="" sourceRef="StartEvent_1" targetRef="Task_3"/>
+    <bpmn2:userTask id="Task_4" name="Open outage tool in main window">
+      <bpmn2:extensionElements>
+        <drools:onEntry-script scriptFormat="http://www.java.com/java">
+          <drools:script>kcontext.setVariable(&quot;path&quot;,&quot;outage&quot;);</drools:script>
+        </drools:onEntry-script>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="_InputOutputSpecification_225">
+        <bpmn2:dataInput id="_DataInput_612" itemSubjectRef="ItemDefinition_1" name="userPromptId"/>
+        <bpmn2:dataInput id="_DataInput_613" itemSubjectRef="ItemDefinition_1" name="header"/>
+        <bpmn2:dataInput id="_DataInput_614" itemSubjectRef="ItemDefinition_1" name="applicationView"/>
+        <bpmn2:dataInput id="_DataInput_615" name="message"/>
+        <bpmn2:dataInput id="_DataInput_616" itemSubjectRef="ItemDefinition_1" name="flowName"/>
+        <bpmn2:dataInput id="_DataInput_617" name="next"/>
+        <bpmn2:dataInput id="DataInput_8" name="TaskName"/>
+        <bpmn2:dataInput id="DataInput_53" name="template"/>
+        <bpmn2:dataOutput id="_DataOutput_404" itemSubjectRef="ItemDefinition_1" name="userPromptId"/>
+        <bpmn2:inputSet id="_InputSet_514">
+          <bpmn2:dataInputRefs>DataInput_8</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_53</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:inputSet id="_InputSet_515" name="New Input Set">
+          <bpmn2:dataInputRefs>_DataInput_612</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_613</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_614</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_615</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_616</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_617</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="_OutputSet_416"/>
+        <bpmn2:outputSet id="_OutputSet_417" name="New Output Set">
+          <bpmn2:dataOutputRefs>_DataOutput_404</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_612">
+        <bpmn2:targetRef>_DataInput_612</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_613">
+        <bpmn2:targetRef>_DataInput_613</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_34">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_69">Known Outage</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_67">_DataInput_613</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_614">
+        <bpmn2:targetRef>_DataInput_614</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_42">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_87">Outage</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_85">_DataInput_614</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_615">
+        <bpmn2:targetRef>_DataInput_615</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_616">
+        <bpmn2:targetRef>_DataInput_616</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_41">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_84">Known Outage</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_82">_DataInput_616</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_617">
+        <bpmn2:targetRef>_DataInput_617</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_8">
+        <bpmn2:targetRef>DataInput_8</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_8">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_16">UTOpenApplicationView</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_15">DataInput_8</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_53">
+        <bpmn2:targetRef>DataInput_53</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_60">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_128">UTOpenApplicationView</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_126">DataInput_53</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:potentialOwner id="PotentialOwner_1">
+        <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_1">
+          <bpmn2:formalExpression id="FormalExpression_141">#{agentName}</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_6" drools:priority="1" name="" sourceRef="Task_4" targetRef="Task_5"/>
+    <bpmn2:task id="Task_3" drools:taskName="KnownOutages" drools:displayName="Known Outages" drools:icon="icons/defaultservicenodeicon.png" name="Determine if outage present">
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="_InputOutputSpecification_224">
+        <bpmn2:dataOutput id="_DataOutput_399" itemSubjectRef="_Boolean" name="outageExists"/>
+        <bpmn2:dataOutput id="_DataOutput_400" itemSubjectRef="ItemDefinition_1" name="outageId"/>
+        <bpmn2:dataOutput id="_DataOutput_401" itemSubjectRef="ItemDefinition_1" name="outageType"/>
+        <bpmn2:dataOutput id="_DataOutput_402" itemSubjectRef="ItemDefinition_1" name="outageStatus"/>
+        <bpmn2:dataOutput id="_DataOutput_403" itemSubjectRef="ItemDefinition_1" name="productAffected"/>
+        <bpmn2:inputSet id="_InputSet_513"/>
+        <bpmn2:outputSet id="_OutputSet_414"/>
+        <bpmn2:outputSet id="_OutputSet_415" name="New Output Set">
+          <bpmn2:dataOutputRefs>_DataOutput_399</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_400</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_401</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_402</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_403</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_1">
+        <bpmn2:sourceRef>_DataOutput_399</bpmn2:sourceRef>
+        <bpmn2:targetRef>outageExists</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="SequenceFlow_4" drools:priority="1" name="" sourceRef="Task_3" targetRef="ExclusiveGateway_1"/>
+    <bpmn2:userTask id="Task_6" name="Advise customer of Known Outage message &amp; capture customer notification preferences.">
+      <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_15</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="_InputOutputSpecification_227">
+        <bpmn2:dataInput id="_DataInput_618" itemSubjectRef="ItemDefinition_1" name="template"/>
+        <bpmn2:dataInput id="_DataInput_619" itemSubjectRef="ItemDefinition_1" name="userPromptId"/>
+        <bpmn2:dataInput id="_DataInput_620" itemSubjectRef="ItemDefinition_1" name="header"/>
+        <bpmn2:dataInput id="_DataInput_621" name="instructionHtml"/>
+        <bpmn2:dataInput id="_DataInput_622" itemSubjectRef="ItemDefinition_1" name="flowName"/>
+        <bpmn2:dataInput id="_DataInput_623" itemSubjectRef="ItemDefinition_1" name="docspecPath"/>
+        <bpmn2:dataInput id="_DataInput_624" itemSubjectRef="ItemDefinition_1" name="node0"/>
+        <bpmn2:dataInput id="DataInput_72" name="TaskName"/>
+        <bpmn2:dataOutput id="_DataOutput_419" itemSubjectRef="ItemDefinition_1" name="userPromptId"/>
+        <bpmn2:inputSet id="_InputSet_517">
+          <bpmn2:dataInputRefs>DataInput_72</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:inputSet id="_InputSet_518" name="New Input Set">
+          <bpmn2:dataInputRefs>_DataInput_618</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_619</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_620</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_621</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_622</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_623</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_624</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="_OutputSet_420"/>
+        <bpmn2:outputSet id="_OutputSet_421" name="New Output Set">
+          <bpmn2:dataOutputRefs>_DataOutput_419</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_618">
+        <bpmn2:targetRef>_DataInput_618</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_87">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_187">UTHtmlInstruction</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_185">_DataInput_618</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_619">
+        <bpmn2:targetRef>_DataInput_619</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_620">
+        <bpmn2:targetRef>_DataInput_620</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_88">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_190">Known Outage</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_188">_DataInput_620</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_621">
+        <bpmn2:targetRef>_DataInput_621</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_86">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_184">Customer is currently in a service impacting outage. Advise customer of Known Outage message from Outage Tool.&lt;br>&#xD;
+&lt;br>&#xD;
+Ensure that the customer's notification preferences have been captured/updated via existing RX protocols.  Select Next once complete.</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_182">_DataInput_621</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_622">
+        <bpmn2:targetRef>_DataInput_622</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_89">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_193">Known Outage</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_191">_DataInput_622</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_623">
+        <bpmn2:targetRef>_DataInput_623</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_624">
+        <bpmn2:targetRef>_DataInput_624</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_72">
+        <bpmn2:targetRef>DataInput_72</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_79">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_168">UTHtmlInstruction</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_167">DataInput_72</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:potentialOwner id="PotentialOwner_3">
+        <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_3">
+          <bpmn2:formalExpression id="FormalExpression_181">#{agentName}</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_2" name="" gatewayDirection="Diverging">
+      <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_8" drools:priority="2" name="Yes" sourceRef="ExclusiveGateway_2" targetRef="Task_6">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_194">return true;</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_9" drools:priority="1" name="No" sourceRef="ExclusiveGateway_2" targetRef="Task_7">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_195">return &quot;Informational&quot;.equalsIgnoreCase(outageStatus);</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:task id="Task_5" drools:taskName="KnownOutages" drools:displayName="Known Outages" drools:icon="icons/defaultservicenodeicon.png" name="Determine if outage is service impacting">
+      <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="_InputOutputSpecification_226">
+        <bpmn2:dataOutput id="_DataOutput_405" itemSubjectRef="ItemDefinition_2" name="isErrored"/>
+        <bpmn2:dataOutput id="_DataOutput_406" itemSubjectRef="ItemDefinition_2" name="outageExists"/>
+        <bpmn2:dataOutput id="_DataOutput_407" itemSubjectRef="ItemDefinition_1" name="outageId"/>
+        <bpmn2:dataOutput id="_DataOutput_408" itemSubjectRef="ItemDefinition_1" name="outageType"/>
+        <bpmn2:dataOutput id="_DataOutput_409" itemSubjectRef="_String" name="outageStatus"/>
+        <bpmn2:dataOutput id="_DataOutput_410" itemSubjectRef="ItemDefinition_1" name="productAffected"/>
+        <bpmn2:dataOutput id="_DataOutput_411" itemSubjectRef="ItemDefinition_3" name="eta"/>
+        <bpmn2:dataOutput id="_DataOutput_412" itemSubjectRef="ItemDefinition_3" name="etr"/>
+        <bpmn2:dataOutput id="_DataOutput_413" itemSubjectRef="ItemDefinition_3" name="startTime"/>
+        <bpmn2:dataOutput id="_DataOutput_414" itemSubjectRef="ItemDefinition_3" name="endTime"/>
+        <bpmn2:dataOutput id="_DataOutput_415" itemSubjectRef="ItemDefinition_1" name="description"/>
+        <bpmn2:dataOutput id="_DataOutput_416" itemSubjectRef="ItemDefinition_1" name="customerImpact"/>
+        <bpmn2:dataOutput id="_DataOutput_417" itemSubjectRef="ItemDefinition_1" name="ticketingInstruction"/>
+        <bpmn2:dataOutput id="_DataOutput_418" itemSubjectRef="ItemDefinition_2" name="isCongestionOutagePresent"/>
+        <bpmn2:inputSet id="_InputSet_516"/>
+        <bpmn2:outputSet id="_OutputSet_418"/>
+        <bpmn2:outputSet id="_OutputSet_419" name="New Output Set">
+          <bpmn2:dataOutputRefs>_DataOutput_405</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_406</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_407</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_408</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_409</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_410</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_411</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_412</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_413</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_414</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_415</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_416</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_417</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_418</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_2">
+        <bpmn2:sourceRef>_DataOutput_409</bpmn2:sourceRef>
+        <bpmn2:targetRef>outageStatus</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="SequenceFlow_7" drools:priority="1" name="" sourceRef="Task_5" targetRef="ExclusiveGateway_2"/>
+    <bpmn2:userTask id="Task_7" name="Review informational outage for possible customer impacts">
+      <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="_InputOutputSpecification_228">
+        <bpmn2:dataInput id="_DataInput_625" itemSubjectRef="ItemDefinition_1" name="template"/>
+        <bpmn2:dataInput id="_DataInput_626" itemSubjectRef="ItemDefinition_1" name="userPromptId"/>
+        <bpmn2:dataInput id="_DataInput_627" itemSubjectRef="ItemDefinition_1" name="header"/>
+        <bpmn2:dataInput id="_DataInput_628" itemSubjectRef="ItemDefinition_1" name="instructionHtml"/>
+        <bpmn2:dataInput id="_DataInput_629" itemSubjectRef="ItemDefinition_1" name="flowName"/>
+        <bpmn2:dataInput id="_DataInput_630" itemSubjectRef="ItemDefinition_1" name="docspecPath"/>
+        <bpmn2:dataInput id="_DataInput_631" itemSubjectRef="ItemDefinition_1" name="node0"/>
+        <bpmn2:dataInput id="DataInput_40" name="TaskName"/>
+        <bpmn2:dataOutput id="_DataOutput_420" itemSubjectRef="ItemDefinition_1" name="userPromptId"/>
+        <bpmn2:inputSet id="_InputSet_519">
+          <bpmn2:dataInputRefs>DataInput_40</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:inputSet id="_InputSet_520" name="New Input Set">
+          <bpmn2:dataInputRefs>_DataInput_625</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_626</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_627</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_628</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_629</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_630</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_631</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="_OutputSet_422"/>
+        <bpmn2:outputSet id="_OutputSet_423" name="New Output Set">
+          <bpmn2:dataOutputRefs>_DataOutput_420</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_625">
+        <bpmn2:targetRef>_DataInput_625</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_52">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_110">UTHtmlInstruction</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_108">_DataInput_625</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_626">
+        <bpmn2:targetRef>_DataInput_626</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_627">
+        <bpmn2:targetRef>_DataInput_627</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_50">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_104">Known Outage</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_102">_DataInput_627</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_628">
+        <bpmn2:targetRef>_DataInput_628</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_53">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_113">Customer is currently in an informational outage. Please review outage details further in the outage section for any special handling.  If service impacting, notify customer.&lt;br>&#xD;
+&lt;br>&#xD;
+Once complete reviewing outage details, select Next to continue troubleshooting.</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_111">_DataInput_628</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_629">
+        <bpmn2:targetRef>_DataInput_629</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_51">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_107">Known Outage</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_105">_DataInput_629</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_630">
+        <bpmn2:targetRef>_DataInput_630</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_631">
+        <bpmn2:targetRef>_DataInput_631</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_40">
+        <bpmn2:targetRef>DataInput_40</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_43">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_89">UTHtmlInstruction</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_88">DataInput_40</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:potentialOwner id="PotentialOwner_2">
+        <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_2">
+          <bpmn2:formalExpression id="FormalExpression_154">#{agentName}</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_1" name="" gatewayDirection="Diverging">
+      <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_5" drools:priority="1" name="Yes" sourceRef="ExclusiveGateway_1" targetRef="Task_4">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_196">return outageExists;</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" drools:priority="1" name="" sourceRef="Task_7" targetRef="ExclusiveGateway_3"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_3" name="" gatewayDirection="Converging">
+      <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_16</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" drools:priority="2" name="No" sourceRef="ExclusiveGateway_1" targetRef="ExclusiveGateway_3">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_197">return true;</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_15" drools:priority="1" name="" sourceRef="Task_6" targetRef="EndEvent_3"/>
+    <bpmn2:endEvent id="EndEvent_3" name="">
+      <bpmn2:incoming>SequenceFlow_15</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:endEvent id="EndEvent_1" name="">
+      <bpmn2:incoming>SequenceFlow_16</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_16" drools:priority="1" name="" sourceRef="ExclusiveGateway_3" targetRef="EndEvent_1"/>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="knownOutage">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="com.bpm.fsr.process.subprocess.knownOutage">
+      <bpmndi:BPMNShape id="BPMNShape_1" bpmnElement="StartEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="80.0" y="367.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_2">
+        <dc:Bounds height="36.0" width="36.0" x="584.0" y="101.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_1" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="330.0" y="360.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_2" bpmnElement="ExclusiveGateway_2" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="779.0" y="360.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_4" bpmnElement="Task_4">
+        <dc:Bounds height="50.0" width="110.0" x="440.0" y="360.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_3" bpmnElement="Task_3">
+        <dc:Bounds height="50.0" width="110.0" x="180.0" y="360.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_6" bpmnElement="Task_6">
+        <dc:Bounds height="111.0" width="110.0" x="880.0" y="330.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_5" bpmnElement="Task_5">
+        <dc:Bounds height="50.0" width="110.0" x="620.0" y="360.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_7" bpmnElement="Task_7">
+        <dc:Bounds height="50.0" width="110.0" x="749.0" y="220.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_3" bpmnElement="ExclusiveGateway_3" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="779.0" y="133.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_2" bpmnElement="EndEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="786.0" y="57.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_3" bpmnElement="EndEvent_3">
+        <dc:Bounds height="36.0" width="36.0" x="1120.0" y="367.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="BPMNShape_1" targetElement="BPMNShape_Task_3">
+        <di:waypoint xsi:type="dc:Point" x="116.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="160.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="160.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="180.0" y="385.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="BPMNShape_Task_3" targetElement="BPMNShape_ExclusiveGateway_1">
+        <di:waypoint xsi:type="dc:Point" x="290.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="330.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="330.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="330.0" y="385.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="BPMNShape_ExclusiveGateway_1" targetElement="BPMNShape_Task_4">
+        <di:waypoint xsi:type="dc:Point" x="381.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="420.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="420.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="440.0" y="385.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_6" sourceElement="BPMNShape_Task_4" targetElement="BPMNShape_Task_5">
+        <di:waypoint xsi:type="dc:Point" x="550.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="600.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="600.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="620.0" y="385.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="SequenceFlow_7" sourceElement="BPMNShape_Task_5" targetElement="BPMNShape_ExclusiveGateway_2">
+        <di:waypoint xsi:type="dc:Point" x="730.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="775.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="775.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="779.0" y="385.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_8" bpmnElement="SequenceFlow_8" sourceElement="BPMNShape_ExclusiveGateway_2" targetElement="BPMNShape_Task_6">
+        <di:waypoint xsi:type="dc:Point" x="830.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="862.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="862.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="880.0" y="385.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_9" bpmnElement="SequenceFlow_9" sourceElement="BPMNShape_ExclusiveGateway_2" targetElement="BPMNShape_Task_7">
+        <di:waypoint xsi:type="dc:Point" x="804.0" y="360.0"/>
+        <di:waypoint xsi:type="dc:Point" x="804.0" y="320.0"/>
+        <di:waypoint xsi:type="dc:Point" x="804.0" y="320.0"/>
+        <di:waypoint xsi:type="dc:Point" x="804.0" y="270.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="BPMNShape_Task_7" targetElement="BPMNShape_ExclusiveGateway_3">
+        <di:waypoint xsi:type="dc:Point" x="804.0" y="220.0"/>
+        <di:waypoint xsi:type="dc:Point" x="804.0" y="204.0"/>
+        <di:waypoint xsi:type="dc:Point" x="804.0" y="204.0"/>
+        <di:waypoint xsi:type="dc:Point" x="804.0" y="184.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_ExclusiveGateway_1" targetElement="BPMNShape_ExclusiveGateway_3">
+        <di:waypoint xsi:type="dc:Point" x="355.0" y="360.0"/>
+        <di:waypoint xsi:type="dc:Point" x="355.0" y="158.0"/>
+        <di:waypoint xsi:type="dc:Point" x="779.0" y="158.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_15" bpmnElement="SequenceFlow_15" sourceElement="BPMNShape_Task_6" targetElement="BPMNShape_EndEvent_3">
+        <di:waypoint xsi:type="dc:Point" x="990.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1100.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1100.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1120.0" y="385.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_16" bpmnElement="SequenceFlow_16" sourceElement="BPMNShape_ExclusiveGateway_3" targetElement="BPMNShape_EndEvent_2">
+        <di:waypoint xsi:type="dc:Point" x="804.0" y="133.0"/>
+        <di:waypoint xsi:type="dc:Point" x="804.0" y="99.0"/>
+        <di:waypoint xsi:type="dc:Point" x="804.0" y="99.0"/>
+        <di:waypoint xsi:type="dc:Point" x="804.0" y="93.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

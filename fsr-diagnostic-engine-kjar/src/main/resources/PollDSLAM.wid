@@ -1,0 +1,89 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+
+[
+  [
+    "name" : "PollDSLAMActuals",
+    "parameters" : [
+      "forceRefresh" : new BooleanDataType()
+    ],
+    "results" : [
+       "isErrored" : new BooleanDataType(),
+       "isPollDSLAMSupported" : new BooleanDataType(), // is this a DSLAM supported by Poll DSLAM
+       "isModemTrained" : new BooleanDataType(), // Is the modem trained
+       "isNoiseMarginAvailable" : new BooleanDataType(), // Does Poll DSLAM return noise margin for this line
+       "noiseMarginUp" : new IntegerDataType(), // upstream noise margin Up for port profile
+       "noiseMarginDown" : new IntegerDataType(), // downstream noise margin for port profile
+       "provisionedSpeedAvailable" : new BooleanDataType(),
+       "actualSpeedAvailable" : new BooleanDataType(),
+       "provisionedSpeedUp" : new IntegerDataType(),
+  	   "provisionedSpeedDown" : new IntegerDataType(),
+       "actualSpeedUp" : new IntegerDataType(),
+  	   "actualSpeedDown" : new IntegerDataType(),
+       "portAdminStatus" : new StringDataType(), // Administrative Status
+       "portOpStatus" : new StringDataType(), //Operational Status
+  	   "crossConnectStatus" : new StringDataType(), //Cross Connect Status
+       "provisionedSpeedUp_2" : new IntegerDataType(), // provisioned speed
+       "provisionedSpeedDown_2" : new IntegerDataType(), // provisioned speed
+       "portAdminStatus_2" : new StringDataType(), // Administrative Status
+       "portOpStatus_2" : new StringDataType(), //Operational Status
+  	   "actualsSubscriberVPI" : new StringDataType(), 
+  	   "actualsSubscriberVCI" : new StringDataType(), 
+  	   "actualsSubscriberVLAN" : new StringDataType(), 
+  	   "actualsNetworkVPI" : new StringDataType(), 
+  	   "actualsNetworkVCI" : new StringDataType(), 
+  	   "actualsNetworkVLAN" : new StringDataType(),
+  	   "provisionedSpeedUp_1" : new IntegerDataType(),
+  	   "provisionedSpeedDown_1" : new IntegerDataType(),
+  	   
+  	   "cardUpTime" : new StringDataType(),
+  	   
+  	   "initAttemptsCurrentPollingIntervalNearEnd" :  new IntegerDataType(),
+  	   "initAttemptsCurrentDailyIntervalNearEnd" :  new IntegerDataType(),
+  	   "initAttemptsCurrentPollingIntervalFarEnd" :  new IntegerDataType(),
+  	   "initAttemptsCurrentDailyIntervalFarEnd" :  new IntegerDataType(),
+  	   
+  	   
+  	   "isModemTrained_Bond1" : new BooleanDataType(),
+  	   "isModemTrained_Bond2" : new BooleanDataType(),
+  	   
+  	   "bondingGroupId" :  new StringDataType(),
+  	   "bondingGroupStatus" : new StringDataType(), 
+  	   "provisionedLink" :  new IntegerDataType(),
+  	   "activeLinks" :  new IntegerDataType(),
+  	   "operationalLinks" :  new IntegerDataType(),
+  	   
+  	   	   
+  	   "initAttemptsCurrentPollingIntervalNearEnd_Bond1" :  new IntegerDataType(),
+  	   "initAttemptsCurrentDailyIntervalNearEnd_Bond1" :  new IntegerDataType(),
+  	   "initAttemptsCurrentPollingIntervalFarEnd_Bond1" :  new IntegerDataType(),
+  	   "initAttemptsCurrentDailyIntervalFarEnd_Bond1" :  new IntegerDataType(),
+  	   
+  	   "initAttemptsCurrentPollingIntervalNearEnd_Bond2" :  new IntegerDataType(),
+  	   "initAttemptsCurrentDailyIntervalNearEnd_Bond2" :  new IntegerDataType(),
+  	   "initAttemptsCurrentPollingIntervalFarEnd_Bond2" :  new IntegerDataType(),
+  	   "initAttemptsCurrentDailyIntervalFarEnd_Bond2" :  new IntegerDataType()
+  	   
+     ], 
+    "displayName" : "Poll DSLAM Actuals",
+    "icon" : "icons/polldslam.gif"
+  ],
+  
+  [
+   "name" : "PollDSLAMInitials",
+   "parameters" : [
+     "forceRefresh" : new BooleanDataType()
+   ],
+   "results" : [
+      "isErrored" : new BooleanDataType(),
+      "isPollDSLAMSupported" : new BooleanDataType(), // is this a DSLAM supported by Poll DSLAM
+      "customerExpScore" : new FloatDataType(), // Customer Experience Score
+      "deviceTID" : new StringDataType() ,
+      "isNetworkCongested" : new BooleanDataType() // Only for CRIS. For Ensemble use OutageInfo.isCongestionOutagePresent  
+      ], 
+      "displayName" : "Poll DSLAM Initials",
+      "icon" : "icons/polldslam-init.gif"
+    ]
+  
+]

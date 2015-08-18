@@ -1,0 +1,11 @@
+import com.bpm.fsr.model.OptOutButtonRuleFact;
+
+rule "optOutButtonRule"
+	dialect "mvel"
+	ruleflow-group "optOutButtonRule"
+	no-loop true
+	when
+		optOutButtonRuleFact : OptOutButtonRuleFact( inWalledGarden == false, outageExists == false )
+	then
+		optOutButtonRuleFact.setOptOutButtonText( "Opt Out" );
+end

@@ -1,0 +1,27 @@
+package com.bpm.fsr.rules;
+
+import com.bpm.fsr.model.AcceptableRatesRuleFact;
+
+rule "SlowSpeedProvisionedAcceptableRule"
+	dialect "mvel"
+	ruleflow-group "ActualAndProvisionedAndPurchasedRatesRule"
+	no-loop true
+	    when
+ 			acceptableRatesRuleFact : AcceptableRatesRuleFact( isPurchasedRatesPresent == true,purchasedRateDown !=null ,purchasedRateUP !=null,isProvisionedRatesPresent == true, (provisionedRateDown >= (0.8 * purchasedRateDown)) == true, (provisionedRateUP >= (0.8 * purchasedRateUP)) == true, isActualRatesPresent == true, (actualRateUP < (0.64 * purchasedRateDown)) == true  )
+ 	    then
+	    	acceptableRatesRuleFact.setPath( "Provisioned Acceptable&Actuals Unacceptable" );
+	    
+end
+
+
+rule "SlowSpeedActualsUnacceptableRule"
+	dialect "mvel"
+	ruleflow-group "ActualAndProvisionedAndPurchasedRatesRule"
+	no-loop true
+	    when
+ 			acceptableRatesRuleFact : AcceptableRatesRuleFact( isPurchasedRatesPresent == true,purchasedRateDown !=null ,purchasedRateUP !=null,isProvisionedRatesPresent == true, (provisionedRateDown >= (0.8 * purchasedRateDown)) == true, (provisionedRateUP >= (0.8 * purchasedRateUP)) == true, isActualRatesPresent == true, (actualRateDown < (0.64 * purchasedRateUP)) == true   )
+ 	    then
+	    	acceptableRatesRuleFact.setPath( "Provisioned Acceptable&Actuals Unacceptable" );
+	    
+end
+

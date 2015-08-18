@@ -1,0 +1,24 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.ListDataType;
+
+[
+  //  LoopQual upsell work item work item
+  [
+    "name" : "LoopQualUpsell",
+    "parameters" : [
+    ],
+    "results" : [
+       "isErrored" : new BooleanDataType(),
+       "maximumSpeedUp" : new IntegerDataType(), //kbps
+  	   "maximumSpeedDown" : new IntegerDataType() //kbps
+   ], 
+    "displayName" : "LoopQual Upsell",
+    "icon" : "icons/loopqual-upsell.gif"
+  ]
+]
+
+
+
+
+

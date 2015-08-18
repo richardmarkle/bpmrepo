@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmn20="http://www.omg.org/bpmn20" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:bpsim="http://www.bpsim.org/schemas/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:drools="http://www.jboss.org/drools" xmlns="http://www.jboss.org/drools" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd http://www.jboss.org/drools drools.xsd http://www.bpsim.org/schemas/1.0 bpsim.xsd" id="_e8mngAQMEeWmKbwu32zs7w" targetNamespace="http://www.omg.org/bpmn20">
+  <bpmn2:itemDefinition id="_agentNameItem" structureRef="String"/>
+  <bpmn2:itemDefinition id="_agentFeedbackItem" structureRef="String"/>
+  <bpmn2:itemDefinition id="_node0Item" structureRef="String"/>
+  <bpmn2:itemDefinition id="_node1Item" structureRef="String"/>
+  <bpmn2:itemDefinition id="_node2Item" structureRef="String"/>
+  <bpmn2:itemDefinition id="_node3Item" structureRef="String"/>
+  <bpmn2:itemDefinition id="_node4Item" structureRef="String"/>
+  <bpmn2:itemDefinition id="_node5Item" structureRef="String"/>
+  <bpmn2:itemDefinition id="_docSpecPathItem" structureRef="String"/>
+  <bpmn2:itemDefinition id="_Task_2_userPromptIdInputXItem" structureRef="String"/>
+  <bpmn2:itemDefinition id="_Task_2_templateInputXItem" structureRef="String"/>
+  <bpmn2:itemDefinition id="_Task_2_headerInputXItem" structureRef="String"/>
+  <bpmn2:itemDefinition id="_Task_2_instructionHtmlInputXItem" structureRef="String"/>
+  <bpmn2:itemDefinition id="_Task_2_flowNameInputXItem" structureRef="String"/>
+  <bpmn2:itemDefinition id="_Task_2_nextButtonLabelInputXItem" structureRef="String"/>
+  <bpmn2:itemDefinition id="_Task_2_docspecPathInputXItem" structureRef="String"/>
+  <bpmn2:itemDefinition id="_Task_2_node0InputXItem" structureRef="StringDataType"/>
+  <bpmn2:itemDefinition id="_Task_2_answerOutputXItem" structureRef="String"/>
+  <bpmn2:process id="com.bpm.fsr.process.subprocess.agentFeedback" drools:version="1" drools:packageName="com.bpm.fsr.process.subprocess" drools:adHoc="false" name="agentFeedback" isExecutable="true">
+    <bpmn2:property id="agentName" itemSubjectRef="_agentNameItem"/>
+    <bpmn2:property id="agentFeedback" itemSubjectRef="_agentFeedbackItem"/>
+    <bpmn2:property id="node0" itemSubjectRef="_node0Item"/>
+    <bpmn2:property id="node1" itemSubjectRef="_node1Item"/>
+    <bpmn2:property id="node2" itemSubjectRef="_node2Item"/>
+    <bpmn2:property id="node3" itemSubjectRef="_node3Item"/>
+    <bpmn2:property id="node4" itemSubjectRef="_node4Item"/>
+    <bpmn2:property id="node5" itemSubjectRef="_node5Item"/>
+    <bpmn2:property id="docSpecPath" itemSubjectRef="_docSpecPathItem"/>
+    <bpmn2:endEvent id="EndEvent_1" drools:bgcolor="#ff6347" drools:selectable="true" name="">
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:scriptTask id="ScriptTask_1" drools:selectable="true" name="Set docspec path" scriptFormat="http://www.java.com/java">
+      <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+      <bpmn2:script>System.out.println(&quot;Setting doc spec path&quot;);
+System.out.println(&quot;node 0: &quot; +node0 + &quot; node 1: &quot; +node1 + &quot; node 2: &quot; +node2 + &quot; node 3:&quot; + node3 + &quot; node 4:&quot; +node4 + &quot; node 5: &quot; + node5  );
+if(node1 != null) {
+	docSpecPath=node1;
+}
+
+if(node2 != null) {
+	docSpecPath=docSpecPath + &quot;:&quot; +node2;	
+}
+
+if(node3 != null) {
+	docSpecPath=docSpecPath + &quot;:&quot; +node3;	
+}
+
+if(node4 != null) {
+	docSpecPath=docSpecPath + &quot;:&quot; +node4;	
+}
+
+if(node5 != null) {
+	docSpecPath=docSpecPath + &quot;:&quot; +node5;	
+}
+
+System.out.println(&quot;docSpecPath: &quot; +docSpecPath);
+kcontext.setVariable(&quot;docSpecPath&quot;,docSpecPath);</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:startEvent id="StartEvent_1" drools:bgcolor="#9acd32" drools:selectable="true" name="">
+      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" drools:priority="1" drools:bgcolor="#000000" drools:selectable="true" name="" sourceRef="StartEvent_1" targetRef="ScriptTask_1"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" drools:priority="1" drools:bgcolor="#000000" drools:selectable="true" name="" sourceRef="ScriptTask_1" targetRef="Task_2"/>
+    <bpmn2:userTask id="Task_2" drools:selectable="true" drools:scriptFormat="http://www.java.com/java" name="capture agent feedback">
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="_e8mngQQMEeWmKbwu32zs7w">
+        <bpmn2:dataInput id="Task_2_TaskNameInputX" name="TaskName"/>
+        <bpmn2:dataInput id="Task_2_userPromptIdInputX" drools:dtype="String" itemSubjectRef="_Task_2_userPromptIdInputXItem" name="userPromptId"/>
+        <bpmn2:dataInput id="Task_2_templateInputX" drools:dtype="String" itemSubjectRef="_Task_2_templateInputXItem" name="template"/>
+        <bpmn2:dataInput id="Task_2_headerInputX" drools:dtype="String" itemSubjectRef="_Task_2_headerInputXItem" name="header"/>
+        <bpmn2:dataInput id="Task_2_instructionHtmlInputX" drools:dtype="String" itemSubjectRef="_Task_2_instructionHtmlInputXItem" name="instructionHtml"/>
+        <bpmn2:dataInput id="Task_2_flowNameInputX" drools:dtype="String" itemSubjectRef="_Task_2_flowNameInputXItem" name="flowName"/>
+        <bpmn2:dataInput id="Task_2_nextButtonLabelInputX" drools:dtype="String" itemSubjectRef="_Task_2_nextButtonLabelInputXItem" name="nextButtonLabel"/>
+        <bpmn2:dataInput id="Task_2_docspecPathInputX" drools:dtype="String" itemSubjectRef="_Task_2_docspecPathInputXItem" name="docspecPath"/>
+        <bpmn2:dataInput id="Task_2_node0InputX" drools:dtype="StringDataType" itemSubjectRef="_Task_2_node0InputXItem" name="node0"/>
+        <bpmn2:dataOutput id="Task_2_answerOutputX" drools:dtype="String" itemSubjectRef="_Task_2_answerOutputXItem" name="answer"/>
+        <bpmn2:inputSet id="_e8nOkAQMEeWmKbwu32zs7w">
+          <bpmn2:dataInputRefs>Task_2_userPromptIdInputX</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>Task_2_templateInputX</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>Task_2_headerInputX</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>Task_2_instructionHtmlInputX</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>Task_2_flowNameInputX</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>Task_2_nextButtonLabelInputX</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>Task_2_docspecPathInputX</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>Task_2_node0InputX</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>Task_2_TaskNameInputX</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="_e8nOkQQMEeWmKbwu32zs7w">
+          <bpmn2:dataOutputRefs>Task_2_answerOutputX</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="_e8nOkgQMEeWmKbwu32zs7w">
+        <bpmn2:targetRef>Task_2_TaskNameInputX</bpmn2:targetRef>
+        <bpmn2:assignment id="_e8nOkwQMEeWmKbwu32zs7w">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="_e8nOlAQMEeWmKbwu32zs7w">UTInstructionAndSurvey</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="_e8nOlQQMEeWmKbwu32zs7w">Task_2_TaskNameInputX</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_e8nOlgQMEeWmKbwu32zs7w">
+        <bpmn2:targetRef>Task_2_templateInputX</bpmn2:targetRef>
+        <bpmn2:assignment id="_e8nOlwQMEeWmKbwu32zs7w">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="_e8nOmAQMEeWmKbwu32zs7w"><![CDATA[UTInstructionAndSurvey]]></bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="_e8nOmQQMEeWmKbwu32zs7w">Task_2_templateInputX</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_e8nOmgQMEeWmKbwu32zs7w">
+        <bpmn2:targetRef>Task_2_headerInputX</bpmn2:targetRef>
+        <bpmn2:assignment id="_e8nOmwQMEeWmKbwu32zs7w">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="_e8nOnAQMEeWmKbwu32zs7w"><![CDATA[Feedback]]></bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="_e8nOnQQMEeWmKbwu32zs7w">Task_2_headerInputX</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_e8nOngQMEeWmKbwu32zs7w">
+        <bpmn2:targetRef>Task_2_flowNameInputX</bpmn2:targetRef>
+        <bpmn2:assignment id="_e8nOnwQMEeWmKbwu32zs7w">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="_e8nOoAQMEeWmKbwu32zs7w">Agent Feedback</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="_e8nOoQQMEeWmKbwu32zs7w">Task_2_flowNameInputX</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_e8nOogQMEeWmKbwu32zs7w">
+        <bpmn2:targetRef>Task_2_nextButtonLabelInputX</bpmn2:targetRef>
+        <bpmn2:assignment id="_e8nOowQMEeWmKbwu32zs7w">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="_e8nOpAQMEeWmKbwu32zs7w"><![CDATA[Submit]]></bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="_e8nOpQQMEeWmKbwu32zs7w">Task_2_nextButtonLabelInputX</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_e8nOpgQMEeWmKbwu32zs7w">
+        <bpmn2:sourceRef>docSpecPath</bpmn2:sourceRef>
+        <bpmn2:targetRef>Task_2_docspecPathInputX</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataOutputAssociation id="_e8nOpwQMEeWmKbwu32zs7w">
+        <bpmn2:sourceRef>Task_2_answerOutputX</bpmn2:sourceRef>
+        <bpmn2:targetRef>agentFeedback</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:potentialOwner id="_e8nOqAQMEeWmKbwu32zs7w">
+        <bpmn2:resourceAssignmentExpression id="_e8nOqQQMEeWmKbwu32zs7w">
+          <bpmn2:formalExpression id="_e8nOqgQMEeWmKbwu32zs7w">#{agentName}</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" drools:priority="1" drools:bgcolor="#000000" drools:selectable="true" name="" sourceRef="Task_2" targetRef="EndEvent_1"/>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="_e8nOqwQMEeWmKbwu32zs7w">
+    <bpmndi:BPMNPlane id="_e8n1oAQMEeWmKbwu32zs7w" bpmnElement="com.bpm.fsr.process.subprocess.agentFeedback">
+      <bpmndi:BPMNShape id="_e8n1oQQMEeWmKbwu32zs7w" bpmnElement="EndEvent_1">
+        <dc:Bounds height="28.0" width="28.0" x="502.0" y="102.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_e8n1ogQMEeWmKbwu32zs7w" bpmnElement="ScriptTask_1">
+        <dc:Bounds height="50.0" width="110.0" x="135.0" y="186.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_e8n1owQMEeWmKbwu32zs7w" bpmnElement="StartEvent_1">
+        <dc:Bounds height="30.0" width="30.0" x="33.0" y="83.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_e8n1pgQMEeWmKbwu32zs7w" bpmnElement="Task_2">
+        <dc:Bounds height="50.0" width="110.0" x="290.0" y="186.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="_e8n1pAQMEeWmKbwu32zs7w" bpmnElement="SequenceFlow_1" sourceElement="_e8n1owQMEeWmKbwu32zs7w" targetElement="_e8n1ogQMEeWmKbwu32zs7w">
+        <di:waypoint xsi:type="dc:Point" x="48.0" y="98.0"/>
+        <di:waypoint xsi:type="dc:Point" x="48.0" y="211.0"/>
+        <di:waypoint xsi:type="dc:Point" x="190.0" y="211.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_e8n1pQQMEeWmKbwu32zs7w" bpmnElement="SequenceFlow_3" sourceElement="_e8n1ogQMEeWmKbwu32zs7w" targetElement="_e8n1pgQMEeWmKbwu32zs7w">
+        <di:waypoint xsi:type="dc:Point" x="190.0" y="211.0"/>
+        <di:waypoint xsi:type="dc:Point" x="265.0" y="210.0"/>
+        <di:waypoint xsi:type="dc:Point" x="265.0" y="210.0"/>
+        <di:waypoint xsi:type="dc:Point" x="345.0" y="211.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_e8n1pwQMEeWmKbwu32zs7w" bpmnElement="SequenceFlow_2" sourceElement="_e8n1pgQMEeWmKbwu32zs7w" targetElement="_e8n1oQQMEeWmKbwu32zs7w">
+        <di:waypoint xsi:type="dc:Point" x="345.0" y="211.0"/>
+        <di:waypoint xsi:type="dc:Point" x="518.0" y="211.0"/>
+        <di:waypoint xsi:type="dc:Point" x="516.0" y="116.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

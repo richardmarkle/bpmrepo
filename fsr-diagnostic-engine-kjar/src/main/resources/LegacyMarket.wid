@@ -1,0 +1,15 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+
+[
+  
+  [
+    "name" : "LegacyMarket",
+    "results" : [
+      "isErrored" : new BooleanDataType(),    
+       "legacyMarket" : new StringDataType() 
+     ], 
+    "displayName" : "LegacyMarket",
+    "icon" : "icons/LegacyMarket.gif"
+  ]
+]

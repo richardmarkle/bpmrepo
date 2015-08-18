@@ -1,0 +1,19 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+
+[
+  // 	
+  // Source  LQ PPPoE vs DHCP based on PRISM on account
+  //  LC  ICL 
+  [
+    "name" : "Protocol",
+    "results" : [
+       "isErrored" : new BooleanDataType(),
+       "protocol" : new StringDataType(), // PPPoE DHCP SIP StickySIP
+       "bbcosPresent" : new BooleanDataType()       
+     ], 
+    "displayName" : "Protocol",
+    "icon" : "icons/protocol.gif"
+  ]
+]

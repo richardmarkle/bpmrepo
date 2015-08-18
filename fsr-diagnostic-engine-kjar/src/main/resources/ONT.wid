@@ -1,0 +1,59 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+
+
+// ONT status and Operations
+// Source : ONII  & VADER
+
+[ 
+  // ONT Info work item
+  [
+    "name" : "ONTInfo",
+    "parameters" : [
+      "forceRefresh" : new BooleanDataType()
+    ],
+    "results" : [
+        "ONTAdminStatus" : new StringDataType(), // ONT Administrative Status
+        "ONTOpStatus" : new StringDataType()  // ONT Operational Status      
+     ], 
+    "displayName" : "ONT Info",
+    "icon" : "icons/ONTInfo.gif"
+  ],
+  
+   // ONT Info work item
+   [
+     "name" : "ONTEthernetPortInfo",
+     "parameters" : [
+       "forceRefresh" : new BooleanDataType()
+     ],
+     "results" : [
+         "isErrored" : new BooleanDataType(),
+         "ethernetPortAdminStatus" : new StringDataType(), // Ethernet Port Administrative Status
+         "ethernetPortOpStatus" : new StringDataType() //Ethernet Port Operational Status
+      ], 
+     "displayName" : "ONT Ethernet Port Info",
+     "icon" : "icons/ont-ethernet-port.gif"
+   ],
+  
+   // Reboot ONT
+  [
+    "name" : "RebootONT",
+    "results" : [
+       "rebootStatus" : new StringDataType(), 
+     ], 
+    "displayName" : "Reboot ONT",
+    "icon" : "icons/ont-reboot.gif"
+  ],
+  
+  // ONT bounce port.  Bounce the Ethernet port on which the current HSI service is active 
+  [
+    "name" : "BounceEthernetPort",
+    "results" : [
+       "bouncePortStatus" : new StringDataType(),
+     ], 
+    "displayName" : "Bounce Ethernet Port",
+    "icon" : "icons/ont-bounceport.gif"
+  ]
+]
+

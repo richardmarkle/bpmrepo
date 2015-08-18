@@ -1,0 +1,16 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.ListDataType; 
+
+[
+  //  ASSIA Diagnostics work item
+  [
+    "name" : "ASSIADiag",
+    "results" : [
+       "messagesPresent" : new BooleanDataType(), // Are diagnostic messages present in ASSIA 
+       "messages" : new ListDataType() // Diagnostic messages from ASSIA        
+   ], 
+    "displayName" : "ASSIA Diagnostics",
+    "icon" : "icons/assia-diag.gif"
+  ]
+]

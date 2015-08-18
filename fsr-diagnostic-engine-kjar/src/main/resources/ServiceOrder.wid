@@ -1,0 +1,22 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+
+[
+  // Service order work item
+  // Source  LQ  SOP webservice  LC- Ensemble
+  [
+    "name" : "ServiceOrder",
+    "results" : [
+       "serviceOrderPresent" : new BooleanDataType(), // is there a service order for the customer
+       "serviceOrderStatus" : new StringDataType(), // status of service order
+       "wfadoStatus" : new StringDataType(), // Only for CRIS  
+       "isPastDueOrder" : new BooleanDataType(), // Is the order due date in the past
+       "isFutureOrder" : new BooleanDataType(), // Is the order due for a future date
+       "isDueTodayOrder" : new BooleanDataType(), // Is the order due today
+       "currentHourInCustomerTZ" : new IntegerDataType()   //  023
+     ], 
+    "displayName" : "Service Order",
+    "icon" : "icons/service-order.gif"
+  ]
+]

@@ -1,0 +1,14 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+
+[
+ // Rx Healthcheck refresh
+  [
+    "name" : "HCRefresh",
+    "results" : [
+       "refreshInitiated" : new BooleanDataType()
+     ], 
+    "displayName" : "HC Refresh",
+    "icon" : "icons/hc-referesh.gif"
+  ]
+]

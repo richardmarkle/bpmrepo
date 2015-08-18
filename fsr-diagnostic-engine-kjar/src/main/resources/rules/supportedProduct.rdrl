@@ -1,0 +1,13 @@
+package com.bpm.fsr.rules;
+
+import com.bpm.fsr.model.ProductRuleFact;
+
+rule "supportedProduct"
+	dialect "mvel"
+	ruleflow-group "validateProduct"
+	no-loop true
+	when
+		productRuleFact : ProductRuleFact( product in ( "HSI", "VoiceMail", "Prism", "IPDATA", "PAIR_BONDED", "ATM",  "DSL", "GPON", "DHP") )	
+	then
+		productRuleFact.setRuleResult( true );
+end

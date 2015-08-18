@@ -1,0 +1,175 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+
+[
+
+[
+  "name" : "ModemSupported",
+  "results" : [
+     "isModemSupported" : new BooleanDataType()
+   ], 
+  "displayName" : "Modem Supported",
+  "icon" : "icons/modem-supported.gif"
+],
+
+
+
+[
+ "name" : "ModemStatus",
+ "results" : [
+    "isModemConnected" : new BooleanDataType(),
+    "modemStatus" : new StringDataType() // Connected Not Connected Not Associated 
+  ], 
+ "displayName" : "Modem Status",
+ "icon" : "icons/modem-status.gif"
+],
+
+
+[
+    "name" : "ModemInfo",
+    "results" : [
+       "isErrored" : new BooleanDataType(),
+       "modemSerialNumber" : new StringDataType(),          
+       "modemWanIpPresent" : new BooleanDataType(),
+       "modemWanIP" : new StringDataType(), // IP address assigned to the modem during the internet session
+  	   "modemFirmwareLatest" : new StringDataType(), // Does the modem have latest firmware values Yes No Never
+       "modemConnectedDevicesPresent" : new BooleanDataType(), //  Are there devices connected to the modem
+       "modemActiveConnectedDevicePresent" : new BooleanDataType(),  // Are there devices that are actively using internet through the modem
+	   "modemEthernetConnectedDevicePresent" : new BooleanDataType(), // Are there devices that are connected to the modem using Ethernet cable as opposed to WiFi
+  	   "modemMake" : new StringDataType(), // Make
+  	   "modemModel" : new StringDataType(), // Model
+  	   "modemFirmware" : new StringDataType() , // Firmware version
+  	   "modemAuthenticatedPPPusername" : new StringDataType()  // PPP username
+     ], 
+    "displayName" : "Modem Info",
+    "icon" : "icons/modem-info.gif"
+],
+
+
+[ 
+   "name" : "ModemReboot",
+   "results" : [
+      "modemRebootInitiated" : new BooleanDataType()
+    ], 
+   "displayName" : "Modem Info",
+   "icon" : "icons/modem-reboot.gif"
+],
+
+[ 
+   "name" : "ModemReset",
+   "results" : [
+   	  "isErrored" : new BooleanDataType(),
+      "modemResetInitiated" : new BooleanDataType()
+    ], 
+   "displayName" : "Modem Reset",
+   "icon" : "icons/modem-reset.gif"
+],
+
+
+[ 
+   "name" : "ModemPing",
+   "results" : [
+      "hostReached" : new BooleanDataType()
+    ], 
+   "displayName" : "Modem Ping",
+   "icon" : "icons/modem-ping.gif"
+ 
+],
+
+// ACS WAN Diag Info
+ [
+   "name" : "ACSWanDiag",
+   "results" : [
+  	    "isErrored" : new BooleanDataType(),
+        "isModemProtocolPresent" : new BooleanDataType(),   // ACS WAN Diag
+        "modemProtocol" : new StringDataType()   // ACS WAN Diag
+    ], 
+   "displayName" : "ACS WAN Info",
+   "icon" : "icons/modem-wan-diag.gif"
+ ],
+ 
+ // Modem Firmware Update
+ [
+   "name" : "ModemFirmwareUpdate",
+   "results" : [
+      "isErrored" : new BooleanDataType(),
+      "isFirmwareUpdateInitiated" : new BooleanDataType()
+    ], 
+   "displayName" : "Modem Firmware  Update",
+   "icon" : "icons/modem-firmware.gif"
+ ],
+ 
+ // Modem Firmware Update Now
+[
+   "name" : "ModemFirmwareUpdateNow",
+   "parameters" : [
+   ],
+   "results" : [
+      "isErrored" : new BooleanDataType(),
+      "isFirmwareUpdateNowInitiated" : new BooleanDataType()
+    ], 
+   "displayName" : "Modem Firmware  Update Now",
+   "icon" : "icons/modem-firmware-update-now.gif"
+],
+
+ // Modem Push Credentials
+ [
+   "name" : "ModemPushCredentials",
+   "results" : [
+      "isErrored" : new BooleanDataType(),
+      "isCredentialPushInitiated" : new BooleanDataType()
+    ], 
+   "displayName" : "Modem Push Credentials",
+   "icon" : "icons/modem-cred.gif"
+ ],
+ 
+ // ACS Wireless security encryption type
+ [
+   "name" : "ModemWireless",
+   "parameters" : [
+   ],
+   "results" : [
+      "isErrored" : new BooleanDataType(),
+      "modemWirelessSecurityEncryptionType" : new ObjectDataType() //WPAandWPA2, WEP, NULL etc
+     
+    ], 
+   "displayName" : "Modem Wireless",
+   "icon" : "icons/modem-wireless.gif"
+ ],
+ 
+ // ACS Wireless Admin password check
+ [
+   "name" : "ModemRemoteManagement",
+   "parameters" : [
+   ],
+   "results" : [
+      "isErrored" : new BooleanDataType(),
+      "isModemWirelessAdminPasswordPresent" : new BooleanDataType() //true or false
+     
+    ], 
+   "displayName" : "Modem remote management",
+   "icon" : "icons/modem-remote-management.gif"
+ ],
+ 
+ 
+ // ACS LAN device connected
+ [
+   "name" : "ModemLANDevicesConnected",
+   "parameters" : [
+   ],
+   "results" : [
+      	"isErrored" : new BooleanDataType(),
+         "modemConnectedDevicesPresent" : new BooleanDataType(), //  Are there devices connected to the modem
+         "modemActiveConnectedDevicePresent" : new BooleanDataType(),  // Are there devices that are actively using internet through the modem
+   	     "modemEthernetConnectedDevicePresent" : new BooleanDataType(), // Are there devices that are connected to the modem using Ethernet cable (as opposed to WiFi)
+   	     "modemWirelessConnectedDevicePresent" : new BooleanDataType(), // Are there devices that are connected to the modem using Ethernet cable (as opposed to WiFi)
+ 		 "modemNumberOfConnectedDevices" : new IntegerDataType(), // Total number of devices registered with the modem
+  	   	 "modemNumberOfActiveDevices" : new IntegerDataType(), // Total number of active devices
+       	 "modemNumberOfActiveEthernetDevices" : new IntegerDataType() // Total number of active wireless devices
+       	 "modemNumberOfActiveWirelessDevices" : new IntegerDataType() // Total number of active wireless devices
+    ], 
+   "displayName" : "Modem LAN device connected",
+   "icon" : "icons/modem-lan-device.gif"
+ ]
+
+]

@@ -1,0 +1,50 @@
+package com.bpm.fsr.rules;
+
+import com.bpm.fsr.model.AcceptableRatesRuleFact;
+
+rule "SlowSpeedPurchasedToProvisionedRateRatioRule"
+	dialect "mvel"
+	ruleflow-group "PurchasedToProvisionedRateRatioRule"
+	no-loop true
+	    when
+ 			acceptableRatesRuleFact : AcceptableRatesRuleFact( isPurchasedRatesPresent == true,purchasedRateDown !=null ,purchasedRateUP !=null,isProvisionedRatesPresent == true, (provisionedRateDown >= (0.8 * purchasedRateDown)) == true, (provisionedRateUP >= (0.8 * purchasedRateUP)) == true )
+ 	    then
+	    	acceptableRatesRuleFact.setPath( "Yes" );
+	    
+end
+
+rule "SlowSpeedPurchasedToProvisionedRateRatioRule1"
+	dialect "mvel"
+	ruleflow-group "PurchasedToProvisionedRateRatioRule"
+	no-loop true
+	    when
+ 			acceptableRatesRuleFact : AcceptableRatesRuleFact( isPurchasedRatesPresent == true,purchasedRateDown !=null ,purchasedRateUP !=null,isProvisionedRatesPresent == false  )
+ 	    then
+	    	acceptableRatesRuleFact.setPath( "No" );
+	    
+end
+
+rule "SlowSpeedPurchasedToProvisionedRateRatioRule2"
+	dialect "mvel"
+	ruleflow-group "PurchasedToProvisionedRateRatioRule"
+	no-loop true
+	    when
+ 			acceptableRatesRuleFact : AcceptableRatesRuleFact( isPurchasedRatesPresent == true,purchasedRateDown !=null ,purchasedRateUP !=null,isProvisionedRatesPresent == true, (provisionedRateDown < (0.8 * purchasedRateDown)) == true )
+ 	    then
+	    	acceptableRatesRuleFact.setPath( "No" );
+	    
+end
+
+rule "SlowSpeedPurchasedToProvisionedRateRatioRule3"
+	dialect "mvel"
+	ruleflow-group "PurchasedToProvisionedRateRatioRule"
+	no-loop true
+	    when
+ 			acceptableRatesRuleFact : AcceptableRatesRuleFact( isPurchasedRatesPresent == true,purchasedRateDown !=null ,purchasedRateUP !=null,isProvisionedRatesPresent == true, (provisionedRateUP < (0.8 * purchasedRateUP)) ==true )
+ 	    then
+	    	acceptableRatesRuleFact.setPath( "No" );
+	    
+end
+
+
+

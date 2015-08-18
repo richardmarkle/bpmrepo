@@ -1,0 +1,32 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+
+[
+  //  Radius Log QRAD work item
+  [
+    "name" : "RadLog",
+    "parameters" : [
+        "forceRefresh" : new BooleanDataType(),
+        "hoursLookingBack" : new IntegerDataType()
+    ],
+    "results" : [
+       "isErrored" : new BooleanDataType(),
+       "logWasFound" : new BooleanDataType(), // true when the log was found
+       "lastEvent" : new StringDataType(), //Alive-Ok Stop admin-request Stop User-Error 
+       "lastEventTimeStamp" : new StringDataType(), // Format TBD
+       "stopUserError" : new IntegerDataType(), // Stop User-Error
+       "stopUserRequest" : new IntegerDataType(), // Stop user request
+       "stopLostCarrier" : new IntegerDataType(), // Stop lost carrier
+       "stopPortError" : new IntegerDataType(), // Stop Port error
+       "stopAdminRequest" : new IntegerDataType(), // Stop admin request
+       "startOk" : new IntegerDataType(), // Start Ok
+       "aliveOk" : new IntegerDataType(), // Alive Ok
+       "stopNasRequest" : new IntegerDataType(), // Stop Nas Request
+       "ipAddressFound" : new BooleanDataType(), // IP address found in log
+       "lastLoggedIP" : new StringDataType() // IP address in the latest log
+     ], 
+    "displayName" : "Radius Log",
+    "icon" : "icons/radlog.gif"
+  ]
+]

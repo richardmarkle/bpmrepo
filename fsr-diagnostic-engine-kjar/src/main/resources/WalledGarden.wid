@@ -1,0 +1,18 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+
+[
+  //  Walled Garden work item
+  //  Source Improv Walled Garden service L Q  and ACS For LC
+  [
+    "name" : "WalledGarden",
+    "results" : [
+       "inWalledGarden" : new BooleanDataType(), // is the customer in WG       
+       "walledGardenType" : new StringDataType(), //  DMCA Stage1 Malware Bamital Suspend Seasonal TempDeny Notice LatePay Notice EUP Notice
+     ], 
+    "displayName" : "Walled Garden",
+    "icon" : "icons/wg.gif"
+  ]
+]
+

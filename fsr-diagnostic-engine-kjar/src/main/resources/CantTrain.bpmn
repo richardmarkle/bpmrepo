@@ -1,0 +1,1258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.jboss.org/drools" xmlns="http://www.jboss.org/drools" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd http://www.jboss.org/drools drools.xsd http://www.bpsim.org/schemas/1.0 bpsim.xsd" id="Definition" expressionLanguage="http://www.mvel.org/2.0" targetNamespace="http://www.jboss.org/drools" typeLanguage="http://www.java.com/javaTypes">
+  <bpmn2:itemDefinition id="ItemDefinition_1" structureRef="String"/>
+  <bpmn2:itemDefinition id="ItemDefinition_2" structureRef="Integer"/>
+  <bpmn2:itemDefinition id="ItemDefinition_3" structureRef="Boolean"/>
+  <bpmn2:itemDefinition id="ItemDefinition_4" structureRef="StringDataType"/>
+  <bpmn2:itemDefinition id="ItemDefinition_5" structureRef="BooleanDataType"/>
+  <bpmn2:itemDefinition id="ItemDefinition_6" structureRef="IntegerDataType"/>
+  <bpmn2:itemDefinition id="_Float" structureRef="Float"/>
+  <bpmn2:itemDefinition id="_ItemDefinition_19625" structureRef="com.bpm.fsr.model.TicketingNodeRuleFact"/>
+  <bpmn2:process id="CantTrainPendingOrders" tns:version="1" tns:packageName="defaultPackage" tns:adHoc="false" name="CantTrain" isExecutable="true" processType="Private">
+    <bpmn2:extensionElements>
+      <tns:import name="com.bpm.fsr.model.TicketingNodeRuleFact"/>
+    </bpmn2:extensionElements>
+    <bpmn2:property id="agentName" itemSubjectRef="ItemDefinition_1"/>
+    <bpmn2:property id="raiseTicket" itemSubjectRef="ItemDefinition_3"/>
+    <bpmn2:property id="processMock" itemSubjectRef="ItemDefinition_1"/>
+    <bpmn2:property id="telephoneNumber" itemSubjectRef="ItemDefinition_1"/>
+    <bpmn2:property id="product" itemSubjectRef="ItemDefinition_1"/>
+    <bpmn2:property id="legacyMarket" itemSubjectRef="ItemDefinition_1"/>
+    <bpmn2:property id="inWalledGarden" itemSubjectRef="ItemDefinition_3"/>
+    <bpmn2:property id="serviceOrderPresent" itemSubjectRef="ItemDefinition_3"/>
+    <bpmn2:property id="serviceOrderStatus" itemSubjectRef="ItemDefinition_1"/>
+    <bpmn2:property id="isPastDueOrder" itemSubjectRef="ItemDefinition_3"/>
+    <bpmn2:property id="isFutureOrder" itemSubjectRef="ItemDefinition_3"/>
+    <bpmn2:property id="isDueTodayOrder" itemSubjectRef="ItemDefinition_3"/>
+    <bpmn2:property id="currentHourInCustomerTZ" itemSubjectRef="ItemDefinition_2"/>
+    <bpmn2:property id="walledGardenType" itemSubjectRef="ItemDefinition_1"/>
+    <bpmn2:property id="wfadoStatus" itemSubjectRef="ItemDefinition_1"/>
+    <bpmn2:property id="orderDueDateOption" itemSubjectRef="ItemDefinition_1"/>
+    <bpmn2:property id="visitSufficientToResolve" itemSubjectRef="ItemDefinition_1"/>
+    <bpmn2:property id="techDispatchNeeded" itemSubjectRef="ItemDefinition_1"/>
+    <bpmn2:property id="accessTech" itemSubjectRef="ItemDefinition_1"/>
+    <bpmn2:property id="hasPRISMonAccount" itemSubjectRef="ItemDefinition_3"/>
+    <bpmn2:property id="ticketingNodeRuleFact" itemSubjectRef="_ItemDefinition_19625"/>
+    <bpmn2:property id="hasGPON" itemSubjectRef="ItemDefinition_3"/>
+    <bpmn2:property id="lastUserPromptID" itemSubjectRef="ItemDefinition_1"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_1" name="" gatewayDirection="Diverging">
+      <bpmn2:incoming>SequenceFlow_32</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_15</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_7" tns:priority="1" name="Yes" sourceRef="ExclusiveGateway_1" targetRef="Task_5">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_117" language="http://www.mvel.org/2.0">return inWalledGarden || serviceOrderPresent || &quot;pending&quot;.equalsIgnoreCase(serviceOrderStatus) || isPastDueOrder || isFutureOrder || isDueTodayOrder || &quot;PFA&quot;.equalsIgnoreCase(wfadoStatus) || &quot;PLD&quot;.equalsIgnoreCase(wfadoStatus) || &quot;PRE&quot;.equalsIgnoreCase(wfadoStatus); </bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_2" name="" gatewayDirection="Diverging">
+      <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_14</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_16</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_9" tns:priority="1" name="Impacting Pending Order Future DD or Past DD" sourceRef="ExclusiveGateway_2" targetRef="ExclusiveGateway_5">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_113" language="http://www.java.com/java">return (&quot;Pending Order - Due Date Future - Impacting Service&quot;.equalsIgnoreCase(orderDueDateOption)) || (&quot;Pending Order - Due Date Past - Impacting Service&quot;.equalsIgnoreCase(orderDueDateOption));&#xD;
+</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" tns:priority="2" name="Impacting Pending Order Today DD" sourceRef="ExclusiveGateway_2" targetRef="Task_3">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_114" language="http://www.java.com/java">return &quot;Pending Order - Due Date Today - Impacting Service&quot;.equalsIgnoreCase(orderDueDateOption);</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_14" tns:priority="3" name="Pending Order Non Impacting Today DD" sourceRef="ExclusiveGateway_2" targetRef="Task_6">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_115" language="http://www.java.com/java">return &quot;Pending Order - Due Date Today - Not Impacting Service&quot;.equalsIgnoreCase(orderDueDateOption);</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:userTask id="Task_3" name="Verify If the customer Tech dispatch needed">
+      <bpmn2:extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println(&quot;Verify the customer tech dispatch needed   task start&quot;);</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println(&quot;Verify the customer tech dispatch needed   task end&quot;);</tns:script>
+        </tns:onExit-script>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="_InputOutputSpecification_110">
+        <bpmn2:dataInput id="_DataInput_654" name="template"/>
+        <bpmn2:dataInput id="_DataInput_655" name="header"/>
+        <bpmn2:dataInput id="_DataInput_656" name="instructionHtml"/>
+        <bpmn2:dataInput id="_DataInput_657" name="flowName"/>
+        <bpmn2:dataInput id="_DataInput_658" name="question"/>
+        <bpmn2:dataInput id="_DataInput_659" name="options"/>
+        <bpmn2:dataInput id="_DataInput_660" name="nextButtonLabel"/>
+        <bpmn2:dataInput id="DataInput_68" name="TaskName"/>
+        <bpmn2:dataOutput id="_DataOutput_30" itemSubjectRef="ItemDefinition_1" name="optionChosen"/>
+        <bpmn2:inputSet id="_InputSet_240">
+          <bpmn2:dataInputRefs>DataInput_68</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:inputSet id="_InputSet_241" name="New Input Set">
+          <bpmn2:dataInputRefs>_DataInput_654</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_655</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_656</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_657</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_658</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_659</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_660</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="_OutputSet_202"/>
+        <bpmn2:outputSet id="_OutputSet_203" name="New Output Set">
+          <bpmn2:dataOutputRefs>_DataOutput_30</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_654">
+        <bpmn2:targetRef>_DataInput_654</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_17">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_42">UTInstructionQuestion</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_40">_DataInput_654</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_655">
+        <bpmn2:targetRef>_DataInput_655</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_18">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_45">Cant Train</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_43">_DataInput_655</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_656">
+        <bpmn2:targetRef>_DataInput_656</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_23">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_60"> </bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_58">_DataInput_656</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_657">
+        <bpmn2:targetRef>_DataInput_657</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_19">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_48">Cannot Train Sub Process</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_46">_DataInput_657</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_658">
+        <bpmn2:targetRef>_DataInput_658</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_20">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_51">Please determine if a tech dispatch is needed to resolve the customer's issue.</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_49">_DataInput_658</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_659">
+        <bpmn2:targetRef>_DataInput_659</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_21">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_54">Yes/No</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_52">_DataInput_659</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_660">
+        <bpmn2:targetRef>_DataInput_660</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_22">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_57">Next</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_55">_DataInput_660</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_68">
+        <bpmn2:targetRef>DataInput_68</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_102">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_216">UTInstructionQuestion</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_215">DataInput_68</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_3">
+        <bpmn2:sourceRef>_DataOutput_30</bpmn2:sourceRef>
+        <bpmn2:targetRef>techDispatchNeeded</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:potentialOwner id="PotentialOwner_3">
+        <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_3">
+          <bpmn2:formalExpression id="FormalExpression_229" language="http://www.java.com/java">#{agentName}</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_6" tns:priority="1" name="" sourceRef="Task_3" targetRef="ExclusiveGateway_3"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_15" tns:priority="2" name="No" sourceRef="ExclusiveGateway_1" targetRef="ExclusiveGateway_6">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_118" language="http://www.mvel.org/2.0">return true;</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_16" tns:priority="4" name="Complete Recent Order OR Non-Impacting Pending Order Future DD or Past DD" sourceRef="ExclusiveGateway_2" targetRef="ExclusiveGateway_6">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_116" language="http://www.mvel.org/2.0">return true;</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:userTask id="Task_6" name="Advise the customer about order completion by 8PM">
+      <bpmn2:extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println(&quot;Advise the customer about order completion by 8PM start&quot;);</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println(&quot;Advise the customer about order completion by 8PM end&quot;);</tns:script>
+        </tns:onExit-script>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_14</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_17</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="_InputOutputSpecification_113">
+        <bpmn2:dataInput id="_DataInput_676" name="template"/>
+        <bpmn2:dataInput id="_DataInput_677" name="header"/>
+        <bpmn2:dataInput id="_DataInput_678" name="instructionHtml"/>
+        <bpmn2:dataInput id="_DataInput_679" name="flowName"/>
+        <bpmn2:dataInput id="DataInput_47" name="TaskName"/>
+        <bpmn2:inputSet id="_InputSet_246">
+          <bpmn2:dataInputRefs>DataInput_47</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:inputSet id="_InputSet_247" name="New Input Set">
+          <bpmn2:dataInputRefs>_DataInput_676</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_677</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_678</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_679</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="_OutputSet_208"/>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_676">
+        <bpmn2:targetRef>_DataInput_676</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_36">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_99">UTHtmlInstruction</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_97">_DataInput_676</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_677">
+        <bpmn2:targetRef>_DataInput_677</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_39">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_108">Cant Train</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_106">_DataInput_677</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_678">
+        <bpmn2:targetRef>_DataInput_678</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_37">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_102">Inform the customer that the pending order on their account will be completed by 8 PM or earlier.  Please include that it does not impact the current issue that they are facing so you will continue to troubleshoot the issue.</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_100">_DataInput_678</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_679">
+        <bpmn2:targetRef>_DataInput_679</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_38">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_105">Cannot Train Sub Process</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_103">_DataInput_679</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_47">
+        <bpmn2:targetRef>DataInput_47</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_81">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_174">UTHtmlInstruction</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_173">DataInput_47</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:potentialOwner id="PotentialOwner_2">
+        <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_2">
+          <bpmn2:formalExpression id="FormalExpression_158" language="http://www.mvel.org/2.0">#{agentName}</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_17" tns:priority="1" name="" sourceRef="Task_6" targetRef="ExclusiveGateway_6"/>
+    <bpmn2:userTask id="Task_4" name="Check WMTand ask customer If that visit sufficient to resolve the issues">
+      <bpmn2:extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println(&quot;Check WMT and ask  customer if that visit sufficient to resolve issue task start&quot;);</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println(&quot;Check WMT and ask  customer if that visit sufficient to resolve issue task end&quot;);</tns:script>
+        </tns:onExit-script>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="_InputOutputSpecification_111">
+        <bpmn2:dataInput id="_DataInput_661" name="template"/>
+        <bpmn2:dataInput id="_DataInput_662" name="header"/>
+        <bpmn2:dataInput id="_DataInput_663" name="instructionHtml"/>
+        <bpmn2:dataInput id="_DataInput_664" name="flowName"/>
+        <bpmn2:dataInput id="_DataInput_665" name="question"/>
+        <bpmn2:dataInput id="_DataInput_666" name="options"/>
+        <bpmn2:dataInput id="_DataInput_667" name="nextButtonLabel"/>
+        <bpmn2:dataInput id="DataInput_87" name="TaskName"/>
+        <bpmn2:dataInput id="DataInput_12" itemSubjectRef="ItemDefinition_1" name="userPromptId"/>
+        <bpmn2:dataOutput id="_DataOutput_31" itemSubjectRef="ItemDefinition_1" name="optionChosen"/>
+        <bpmn2:dataOutput id="DataOutput_7" itemSubjectRef="ItemDefinition_1" name="userPromptId"/>
+        <bpmn2:inputSet id="_InputSet_242">
+          <bpmn2:dataInputRefs>DataInput_87</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_12</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:inputSet id="_InputSet_243" name="New Input Set">
+          <bpmn2:dataInputRefs>_DataInput_661</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_662</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_663</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_664</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_665</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_666</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_667</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="_OutputSet_204">
+          <bpmn2:dataOutputRefs>DataOutput_7</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+        <bpmn2:outputSet id="_OutputSet_205" name="New Output Set">
+          <bpmn2:dataOutputRefs>_DataOutput_31</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_661">
+        <bpmn2:targetRef>_DataInput_661</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_13">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_30">UTInstructionQuestion</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_28">_DataInput_661</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_662">
+        <bpmn2:targetRef>_DataInput_662</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_26">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_69">Cant Train</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_67">_DataInput_662</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_663">
+        <bpmn2:targetRef>_DataInput_663</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_12">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_26">Check Where's My Tech to determine when the customer can expect a technician to arrive and the work to be performed.&#xD;
+&lt;a href=&quot;http://ntomp34n.ad.qintra.com/wmt/&quot; target=&quot;_blank&quot;>WMT Link&lt;/a></bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_20">_DataInput_663</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_664">
+        <bpmn2:targetRef>_DataInput_664</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_16">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_39">Cannot Train Sub Process</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_37">_DataInput_664</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_665">
+        <bpmn2:targetRef>_DataInput_665</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_25">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_66">Is the customer satisfied that this will resolve their issue?</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_64">_DataInput_665</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_666">
+        <bpmn2:targetRef>_DataInput_666</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_24">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_63">Yes/No</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_61">_DataInput_666</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_667">
+        <bpmn2:targetRef>_DataInput_667</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_27">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_72">Next</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_70">_DataInput_667</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_87">
+        <bpmn2:targetRef>DataInput_87</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_121">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_255">UTInstructionQuestion</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_254">DataInput_87</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_12">
+        <bpmn2:targetRef>DataInput_12</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_7">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_33">IN_019_004</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_31">DataInput_12</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_4">
+        <bpmn2:sourceRef>_DataOutput_31</bpmn2:sourceRef>
+        <bpmn2:targetRef>visitSufficientToResolve</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_9">
+        <bpmn2:sourceRef>DataOutput_7</bpmn2:sourceRef>
+        <bpmn2:targetRef>lastUserPromptID</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:potentialOwner id="PotentialOwner_4">
+        <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_4">
+          <bpmn2:formalExpression id="FormalExpression_268" language="http://www.mvel.org/2.0">#{agentName}</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_11" tns:priority="1" name="" sourceRef="Task_4" targetRef="ExclusiveGateway_4"/>
+    <bpmn2:userTask id="Task_5" name="Investigate order due date and impact">
+      <bpmn2:extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println(&quot;Investigate order due date and impact starts&quot;);</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println(&quot;Investigate order due date and impact ends&quot;);</tns:script>
+        </tns:onExit-script>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="_InputOutputSpecification_112">
+        <bpmn2:dataInput id="_DataInput_668" name="template"/>
+        <bpmn2:dataInput id="_DataInput_669" name="header"/>
+        <bpmn2:dataInput id="_DataInput_670" name="instructionHtml"/>
+        <bpmn2:dataInput id="_DataInput_671" name="dropDownPrompt"/>
+        <bpmn2:dataInput id="_DataInput_672" name="dropDownOptions"/>
+        <bpmn2:dataInput id="_DataInput_673" name="showTextBox"/>
+        <bpmn2:dataInput id="_DataInput_674" name="flowName"/>
+        <bpmn2:dataInput id="_DataInput_675" name="nextBtnLabel"/>
+        <bpmn2:dataInput id="DataInput_8" name="TaskName"/>
+        <bpmn2:dataOutput id="_DataOutput_32" itemSubjectRef="ItemDefinition_1" name="dropDownChoice"/>
+        <bpmn2:dataOutput id="_DataOutput_33" itemSubjectRef="ItemDefinition_4" name="textBoxContents"/>
+        <bpmn2:inputSet id="_InputSet_244">
+          <bpmn2:dataInputRefs>DataInput_8</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:inputSet id="_InputSet_245" name="New Input Set">
+          <bpmn2:dataInputRefs>_DataInput_668</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_669</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_670</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_671</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_672</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_673</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_674</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_675</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="_OutputSet_206"/>
+        <bpmn2:outputSet id="_OutputSet_207" name="New Output Set">
+          <bpmn2:dataOutputRefs>_DataOutput_32</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_33</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_668">
+        <bpmn2:targetRef>_DataInput_668</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_28">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_75">UTDropDownText</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_73">_DataInput_668</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_669">
+        <bpmn2:targetRef>_DataInput_669</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_29">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_78">Cant Train</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_76">_DataInput_669</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_670">
+        <bpmn2:targetRef>_DataInput_670</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_30">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_81">Inform the customer that there is pending/recent order(s) on their account which may be impacting service and you will investigate.</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_79">_DataInput_670</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_671">
+        <bpmn2:targetRef>_DataInput_671</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_34">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_93">Select Order Due Date status and whether the pending order impacts service from the list below:</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_91">_DataInput_671</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_672">
+        <bpmn2:targetRef>_DataInput_672</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_35">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_96">Pending Order - Due Date Today - Impacting Service/Pending Order - Due Date Today - Not Impacting Service/Pending Order - Due Date Future - Impacting Service/Pending Order - Due Date Future - Not Impacting Service/Pending Order - Due Date Past - Impacting Service/Pending Order - Due Date Past - Not Impacting Service/Recent Order</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_94">_DataInput_672</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_673">
+        <bpmn2:targetRef>_DataInput_673</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_33">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_90">true</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_88">_DataInput_673</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_674">
+        <bpmn2:targetRef>_DataInput_674</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_31">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_84">Cannot Train Sub Process</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_82">_DataInput_674</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_675">
+        <bpmn2:targetRef>_DataInput_675</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_32">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_87">Next</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_85">_DataInput_675</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_8">
+        <bpmn2:targetRef>DataInput_8</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_42">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_36">UTDropDownText</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_35">DataInput_8</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_2">
+        <bpmn2:sourceRef>_DataOutput_32</bpmn2:sourceRef>
+        <bpmn2:targetRef>orderDueDateOption</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:potentialOwner id="PotentialOwner_1">
+        <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_1">
+          <bpmn2:formalExpression id="FormalExpression_74" language="http://www.mvel.org/2.0">#{agentName}</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_8" tns:priority="1" name="" sourceRef="Task_5" targetRef="ExclusiveGateway_2"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_3" name="" gatewayDirection="Diverging">
+      <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_20</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_10" tns:priority="1" name="Yes" sourceRef="ExclusiveGateway_3" targetRef="Task_4">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_111" language="http://www.java.com/java">return &quot;Yes&quot;.equalsIgnoreCase(techDispatchNeeded);</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:userTask id="Task_2" name="Send to Care to discuss Issue Further">
+      <bpmn2:extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println(&quot;Send to care to discuss Issue further task start&quot;);</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println(&quot;Send to care to discuss Issue further task end&quot;);</tns:script>
+        </tns:onExit-script>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_12</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_19</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="_InputOutputSpecification_109">
+        <bpmn2:dataInput id="_DataInput_650" name="template"/>
+        <bpmn2:dataInput id="_DataInput_651" name="header"/>
+        <bpmn2:dataInput id="_DataInput_652" name="instructionHtml"/>
+        <bpmn2:dataInput id="_DataInput_653" name="flowName"/>
+        <bpmn2:dataInput id="DataInput_118" name="TaskName"/>
+        <bpmn2:dataInput id="DataInput_10" itemSubjectRef="ItemDefinition_1" name="userPromptId"/>
+        <bpmn2:dataOutput id="DataOutput_5" itemSubjectRef="ItemDefinition_1" name="userPromptId"/>
+        <bpmn2:inputSet id="_InputSet_226">
+          <bpmn2:dataInputRefs>DataInput_118</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_10</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:inputSet id="_InputSet_227" name="New Input Set">
+          <bpmn2:dataInputRefs>_DataInput_650</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_651</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_652</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_653</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="_OutputSet_201">
+          <bpmn2:dataOutputRefs>DataOutput_5</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_650">
+        <bpmn2:targetRef>_DataInput_650</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_8">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_24">UTHtmlInstruction</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_22">_DataInput_650</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_651">
+        <bpmn2:targetRef>_DataInput_651</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_9">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_27">Cant Train</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_25">_DataInput_651</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_652">
+        <bpmn2:targetRef>_DataInput_652</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_11">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_17">Due to the pending order this is not a repair issue at this time; once the order is complete, we would be able to investigate if a repair problem occurred.  Ask the customer if they would like to speak to a CARE agent to further discuss the issue and additional options available to resolve.</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_11">_DataInput_652</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_653">
+        <bpmn2:targetRef>_DataInput_653</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_10">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_8">Cannot Train Sub Process</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_2">_DataInput_653</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_118">
+        <bpmn2:targetRef>DataInput_118</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_152">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_318">UTHtmlInstruction</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_317">DataInput_118</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_10">
+        <bpmn2:targetRef>DataInput_10</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_5">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_19">IN_019_002</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_16">DataInput_10</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_7">
+        <bpmn2:sourceRef>DataOutput_5</bpmn2:sourceRef>
+        <bpmn2:targetRef>lastUserPromptID</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:potentialOwner id="PotentialOwner_5">
+        <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_5">
+          <bpmn2:formalExpression id="FormalExpression_331" language="http://www.mvel.org/2.0">#{agentName}</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_19" tns:priority="1" name="" sourceRef="Task_2" targetRef="ExclusiveGateway_9"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_20" tns:priority="2" name="No" sourceRef="ExclusiveGateway_3" targetRef="Task_11">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_112" language="http://www.mvel.org/2.0">return true;</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_7" name="" gatewayDirection="Diverging">
+      <bpmn2:incoming>SequenceFlow_24</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_25</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_26</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_25" tns:priority="1" name="Yes" sourceRef="ExclusiveGateway_7" targetRef="ExclusiveGateway_8">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_492" language="http://www.java.com/java">return currentHourInCustomerTZ != null &amp;&amp; currentHourInCustomerTZ > 5 ;</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_26" tns:priority="2" name="No" sourceRef="ExclusiveGateway_7" targetRef="Task_8">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_491" language="http://www.mvel.org/2.0">return true;</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:task id="Task_1" tns:taskName="WalledGarden" tns:displayName="Walled Garden" tns:icon="icons/wg.gif" name="Check WalledGarden">
+      <bpmn2:incoming>SequenceFlow_27</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_29</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="_InputOutputSpecification_121">
+        <bpmn2:dataOutput id="_DataOutput_50" itemSubjectRef="ItemDefinition_3" name="inWalledGarden"/>
+        <bpmn2:dataOutput id="_DataOutput_51" itemSubjectRef="ItemDefinition_1" name="walledGardenType"/>
+        <bpmn2:inputSet id="_InputSet_257"/>
+        <bpmn2:outputSet id="_OutputSet_222"/>
+        <bpmn2:outputSet id="_OutputSet_223" name="New Output Set">
+          <bpmn2:dataOutputRefs>_DataOutput_50</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_51</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_16">
+        <bpmn2:sourceRef>_DataOutput_50</bpmn2:sourceRef>
+        <bpmn2:targetRef>inWalledGarden</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_18">
+        <bpmn2:sourceRef>_DataOutput_51</bpmn2:sourceRef>
+        <bpmn2:targetRef>walledGardenType</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="SequenceFlow_29" tns:priority="1" name="" sourceRef="Task_1" targetRef="Task_9"/>
+    <bpmn2:startEvent id="_1" name="">
+      <bpmn2:outgoing>SequenceFlow_27</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_27" tns:priority="1" name="" sourceRef="_1" targetRef="Task_1"/>
+    <bpmn2:task id="Task_9" tns:taskName="ServiceOrder" tns:displayName="Service Order" tns:icon="icons/service-order.gif" name="Check for Pending/Recent Orders">
+      <bpmn2:incoming>SequenceFlow_29</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_32</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="_InputOutputSpecification_122">
+        <bpmn2:dataOutput id="_DataOutput_52" itemSubjectRef="ItemDefinition_3" name="serviceOrderPresent"/>
+        <bpmn2:dataOutput id="_DataOutput_53" itemSubjectRef="ItemDefinition_1" name="serviceOrderStatus"/>
+        <bpmn2:dataOutput id="_DataOutput_54" itemSubjectRef="ItemDefinition_1" name="wfadoStatus"/>
+        <bpmn2:dataOutput id="_DataOutput_55" itemSubjectRef="ItemDefinition_3" name="isPastDueOrder"/>
+        <bpmn2:dataOutput id="_DataOutput_56" itemSubjectRef="ItemDefinition_3" name="isFutureOrder"/>
+        <bpmn2:dataOutput id="_DataOutput_57" itemSubjectRef="ItemDefinition_3" name="isDueTodayOrder"/>
+        <bpmn2:dataOutput id="_DataOutput_58" itemSubjectRef="ItemDefinition_2" name="currentHourInCustomerTZ"/>
+        <bpmn2:inputSet id="_InputSet_285"/>
+        <bpmn2:outputSet id="_OutputSet_224"/>
+        <bpmn2:outputSet id="_OutputSet_225" name="New Output Set">
+          <bpmn2:dataOutputRefs>_DataOutput_52</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_53</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_54</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_55</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_56</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_57</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_58</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_19">
+        <bpmn2:sourceRef>_DataOutput_52</bpmn2:sourceRef>
+        <bpmn2:targetRef>serviceOrderPresent</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_20">
+        <bpmn2:sourceRef>_DataOutput_53</bpmn2:sourceRef>
+        <bpmn2:targetRef>serviceOrderStatus</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_21">
+        <bpmn2:sourceRef>_DataOutput_54</bpmn2:sourceRef>
+        <bpmn2:targetRef>wfadoStatus</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_22">
+        <bpmn2:sourceRef>_DataOutput_55</bpmn2:sourceRef>
+        <bpmn2:targetRef>isPastDueOrder</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_23">
+        <bpmn2:sourceRef>_DataOutput_56</bpmn2:sourceRef>
+        <bpmn2:targetRef>isFutureOrder</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_24">
+        <bpmn2:sourceRef>_DataOutput_57</bpmn2:sourceRef>
+        <bpmn2:targetRef>isDueTodayOrder</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_26">
+        <bpmn2:sourceRef>_DataOutput_58</bpmn2:sourceRef>
+        <bpmn2:targetRef>currentHourInCustomerTZ</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="SequenceFlow_32" tns:priority="1" name="" sourceRef="Task_9" targetRef="ExclusiveGateway_1"/>
+    <bpmn2:task id="Task_11" tns:taskName="ServiceOrder" tns:displayName="Service Order" tns:icon="icons/service-order.gif" name="Check Customer's local time after 5PM">
+      <bpmn2:incoming>SequenceFlow_20</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_24</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="_InputOutputSpecification_123">
+        <bpmn2:dataOutput id="_DataOutput_59" itemSubjectRef="ItemDefinition_5" name="serviceOrderPresent"/>
+        <bpmn2:dataOutput id="_DataOutput_60" itemSubjectRef="ItemDefinition_4" name="serviceOrderStatus"/>
+        <bpmn2:dataOutput id="_DataOutput_61" itemSubjectRef="ItemDefinition_4" name="wfadoStatus"/>
+        <bpmn2:dataOutput id="_DataOutput_62" itemSubjectRef="ItemDefinition_5" name="isPastDueOrder"/>
+        <bpmn2:dataOutput id="_DataOutput_63" itemSubjectRef="ItemDefinition_5" name="isFutureOrder"/>
+        <bpmn2:dataOutput id="_DataOutput_64" itemSubjectRef="ItemDefinition_5" name="isDueTodayOrder"/>
+        <bpmn2:dataOutput id="_DataOutput_65" itemSubjectRef="ItemDefinition_2" name="currentHourInCustomerTZ"/>
+        <bpmn2:inputSet id="_InputSet_286"/>
+        <bpmn2:outputSet id="_OutputSet_226"/>
+        <bpmn2:outputSet id="_OutputSet_227" name="New Output Set">
+          <bpmn2:dataOutputRefs>_DataOutput_59</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_60</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_61</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_62</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_63</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_64</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>_DataOutput_65</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_27">
+        <bpmn2:sourceRef>_DataOutput_65</bpmn2:sourceRef>
+        <bpmn2:targetRef>currentHourInCustomerTZ</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="SequenceFlow_24" tns:priority="1" name="" sourceRef="Task_11" targetRef="ExclusiveGateway_7"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_6" name="" gatewayDirection="Converging">
+      <bpmn2:incoming>SequenceFlow_15</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_16</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_17</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_4" tns:priority="1" name="" sourceRef="ExclusiveGateway_6" targetRef="CallActivity_1"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_8" name="" gatewayDirection="Diverging">
+      <bpmn2:incoming>SequenceFlow_25</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_21</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" tns:priority="1" name="CRIS" sourceRef="ExclusiveGateway_8" targetRef="ExclusiveGateway_6">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_71" language="http://www.mvel.org/2.0">return legacyMarket.equalsIgnoreCase(&quot;CRIS&quot;);</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_21" tns:priority="2" name="Ens" sourceRef="ExclusiveGateway_8" targetRef="ExclusiveGateway_5">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_68" language="http://www.mvel.org/2.0">return true;</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:userTask id="Task_8" name="Advise the customer about order completion by 5PM">
+      <bpmn2:extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println(&quot;Advise the customer about order completion by 5PM task start&quot;);</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println(&quot;Advise the customer about order completion by 5PM task end&quot;);</tns:script>
+        </tns:onExit-script>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_26</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="_InputOutputSpecification_116">
+        <bpmn2:dataInput id="_DataInput_680" name="template"/>
+        <bpmn2:dataInput id="_DataInput_681" name="header"/>
+        <bpmn2:dataInput id="_DataInput_682" name="instructionHtml"/>
+        <bpmn2:dataInput id="_DataInput_683" name="flowName"/>
+        <bpmn2:dataInput id="DataInput_125" name="TaskName"/>
+        <bpmn2:dataInput id="DataInput_11" itemSubjectRef="ItemDefinition_1" name="userPromptId"/>
+        <bpmn2:dataOutput id="DataOutput_6" itemSubjectRef="ItemDefinition_1" name="userPromptId"/>
+        <bpmn2:inputSet id="_InputSet_251">
+          <bpmn2:dataInputRefs>DataInput_125</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_11</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:inputSet id="_InputSet_252" name="New Input Set">
+          <bpmn2:dataInputRefs>_DataInput_680</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_681</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_682</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>_DataInput_683</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="_OutputSet_213">
+          <bpmn2:dataOutputRefs>DataOutput_6</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_680">
+        <bpmn2:targetRef>_DataInput_680</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_1">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_4">UTHtmlInstruction</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_1">_DataInput_680</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_681">
+        <bpmn2:targetRef>_DataInput_681</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_2">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_7">Cant Train</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_5">_DataInput_681</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_682">
+        <bpmn2:targetRef>_DataInput_682</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_3">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_12">Inform the customer that the pending order on their account will be completed by 5 PM or earlier.  Please include that it impacts the current issue they are facing and should resolve the issue, if not, please call back.</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_9">_DataInput_682</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_683">
+        <bpmn2:targetRef>_DataInput_683</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_4">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_15">Cannot Train Sub Process</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_13">_DataInput_683</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_125">
+        <bpmn2:targetRef>DataInput_125</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_159">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_333">UTHtmlInstruction</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_332">DataInput_125</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_11">
+        <bpmn2:targetRef>DataInput_11</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_6">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_29">IN_019_006</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_21">DataInput_11</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_8">
+        <bpmn2:sourceRef>DataOutput_6</bpmn2:sourceRef>
+        <bpmn2:targetRef>lastUserPromptID</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:potentialOwner id="PotentialOwner_6">
+        <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_6">
+          <bpmn2:formalExpression id="FormalExpression_346" language="http://www.mvel.org/2.0">#{agentName}</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_5" tns:priority="1" name="" sourceRef="Task_8" targetRef="ExclusiveGateway_9"/>
+    <bpmn2:endEvent id="EndEvent_5" name="">
+      <bpmn2:incoming>SequenceFlow_30</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_9" name="" gatewayDirection="Converging">
+      <bpmn2:incoming>SequenceFlow_19</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_18</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_33</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_36</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_10" name="" gatewayDirection="Diverging">
+      <bpmn2:incoming>SequenceFlow_31</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_30</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_33</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_30" tns:priority="2" name="" sourceRef="ExclusiveGateway_10" targetRef="EndEvent_5">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_3" language="http://www.java.com/java">return true;</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_33" tns:priority="1" name="Raise Ticket" sourceRef="ExclusiveGateway_10" targetRef="ExclusiveGateway_9">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_14" language="http://www.java.com/java">return raiseTicket;</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:callActivity id="CallActivity_1" tns:waitForCompletion="true" tns:independent="false" name="CantTrainVerifyProvisioned " calledElement="CantTrainVerifyProvisioned">
+      <bpmn2:extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println(&quot;CantTrainVerifyProvisioned process start&quot;);</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println(&quot;CantTrainVerifyProvisioned process end&quot;);</tns:script>
+        </tns:onExit-script>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_31</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="InputOutputSpecification_2">
+        <bpmn2:dataInput id="DataInput_1" itemSubjectRef="ItemDefinition_1" name="agentName"/>
+        <bpmn2:dataInput id="DataInput_2" itemSubjectRef="ItemDefinition_1" name="processMock"/>
+        <bpmn2:dataInput id="DataInput_3" itemSubjectRef="ItemDefinition_1" name="legacyMarket"/>
+        <bpmn2:dataInput id="DataInput_4" itemSubjectRef="ItemDefinition_1" name="product"/>
+        <bpmn2:dataInput id="DataInput_5" itemSubjectRef="ItemDefinition_3" name="raiseTicket"/>
+        <bpmn2:dataInput id="DataInput_6" itemSubjectRef="ItemDefinition_1" name="accessTech"/>
+        <bpmn2:dataInput id="DataInput_7" itemSubjectRef="ItemDefinition_3" name="hasPRISMonAccount"/>
+        <bpmn2:dataInput id="DataInput_9" itemSubjectRef="ItemDefinition_3" name="hasGPON"/>
+        <bpmn2:dataOutput id="DataOutput_1" itemSubjectRef="ItemDefinition_3" name="raiseTicket"/>
+        <bpmn2:dataOutput id="DataOutput_2" itemSubjectRef="ItemDefinition_1" name="processMock"/>
+        <bpmn2:dataOutput id="DataOutput_3" itemSubjectRef="_ItemDefinition_19625" name="ticketingNodeRuleFact"/>
+        <bpmn2:dataOutput id="DataOutput_4" itemSubjectRef="ItemDefinition_1" name="lastUserPromptID"/>
+        <bpmn2:inputSet id="_InputSet_284" name="Input Set 284">
+          <bpmn2:dataInputRefs>DataInput_1</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_2</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_3</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_4</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_5</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_6</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_7</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_9</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="OutputSet_1" name="Output Set 1">
+          <bpmn2:dataOutputRefs>DataOutput_1</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>DataOutput_2</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>DataOutput_3</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>DataOutput_4</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_1">
+        <bpmn2:sourceRef>agentName</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_1</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_2">
+        <bpmn2:sourceRef>processMock</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_2</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_3">
+        <bpmn2:sourceRef>legacyMarket</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_3</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_4">
+        <bpmn2:sourceRef>product</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_4</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_5">
+        <bpmn2:sourceRef>raiseTicket</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_5</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_6">
+        <bpmn2:sourceRef>accessTech</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_6</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_7">
+        <bpmn2:sourceRef>hasPRISMonAccount</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_7</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_9">
+        <bpmn2:sourceRef>hasGPON</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_9</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_17">
+        <bpmn2:sourceRef>DataOutput_1</bpmn2:sourceRef>
+        <bpmn2:targetRef>raiseTicket</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_1">
+        <bpmn2:sourceRef>DataOutput_2</bpmn2:sourceRef>
+        <bpmn2:targetRef>processMock</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_5">
+        <bpmn2:sourceRef>DataOutput_3</bpmn2:sourceRef>
+        <bpmn2:targetRef>ticketingNodeRuleFact</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_6">
+        <bpmn2:sourceRef>DataOutput_4</bpmn2:sourceRef>
+        <bpmn2:targetRef>lastUserPromptID</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+    </bpmn2:callActivity>
+    <bpmn2:sequenceFlow id="SequenceFlow_31" tns:priority="1" name="" sourceRef="CallActivity_1" targetRef="ExclusiveGateway_10"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_11" name="" gatewayDirection="Diverging">
+      <bpmn2:incoming>SequenceFlow_36</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_35</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_37</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_35" tns:priority="2" name="Execute Ticketing Rules" sourceRef="ExclusiveGateway_11" targetRef="BusinessRuleTask_1">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_10" language="http://www.java.com/java">return true;</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_36" tns:priority="1" name="" sourceRef="ExclusiveGateway_9" targetRef="ExclusiveGateway_11"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_37" tns:priority="1" name="Ticketing Rule Executed" sourceRef="ExclusiveGateway_11" targetRef="EndEvent_7">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_6" language="http://www.java.com/java">return ticketingNodeRuleFact != null;</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:endEvent id="EndEvent_7" name="">
+      <bpmn2:incoming>SequenceFlow_37</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:endEvent id="EndEvent_6" name="">
+      <bpmn2:incoming>SequenceFlow_34</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:businessRuleTask id="BusinessRuleTask_1" tns:ruleFlowGroup="CannotTrainTicketingRule" name="Execute Cannot Train Ticketing Node Rules">
+      <bpmn2:extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println(&quot;CannotTrainTicketingRule started&quot;);&#xD;
+com.bpm.fsr.model.TicketingNodeRuleFact  ticketingNodeRuleFact1 = new com.bpm.fsr.model.TicketingNodeRuleFact();&#xD;
+ticketingNodeRuleFact1.setLegacy(legacyMarket);&#xD;
+ticketingNodeRuleFact1.setPoc(product);&#xD;
+ticketingNodeRuleFact1.setPrismOnAccount(hasPRISMonAccount);&#xD;
+ticketingNodeRuleFact1.setEndTaskId(lastUserPromptID);&#xD;
+ticketingNodeRuleFact1.setAccessTech(accessTech);&#xD;
+System.out.println(&quot;ticketingNodeRuleFact before executing rules &quot; + ticketingNodeRuleFact1.toString());&#xD;
+kcontext.setVariable(&quot;ticketingNodeRuleFact&quot; , ticketingNodeRuleFact1);&#xD;
+kcontext.getKnowledgeRuntime().insert(ticketingNodeRuleFact1);&#xD;
+</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println(&quot;CannotTrainTicketingRule Parent end&quot;);&#xD;
+System.out.println(&quot;ticketingNodeRuleFact after executing rules &quot; + ticketingNodeRuleFact.toString());&#xD;
+System.out.println(&quot;Node1=&quot;+ticketingNodeRuleFact.getNode1()+&quot;Node2=&quot;+ticketingNodeRuleFact.getNode2()+&quot;Node3=&quot;+ ticketingNodeRuleFact.getNode3()+&quot;Node4=&quot;+ ticketingNodeRuleFact.getNode4());&#xD;
+kcontext.setVariable(&quot;ticketingNodeRuleFact&quot; , ticketingNodeRuleFact);&#xD;
+kcontext.setVariable(&quot;raiseTicket&quot;,true);&#xD;
+&#xD;
+System.out.println(&quot;From Canttrain Raiseticket->&quot;+raiseTicket);</tns:script>
+        </tns:onExit-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println(&quot;CannotBrowseTicketingRule Parent end&quot;);&#xD;
+System.out.println(&quot;ticketingNodeRuleFact after executing rules &quot; + ticketingNodeRuleFact.toString());&#xD;
+System.out.println(&quot;Node1=&quot;+ticketingNodeRuleFact.getNode1()+&quot;Node2=&quot;+ticketingNodeRuleFact.getNode2()+&quot;Node3=&quot;+ ticketingNodeRuleFact.getNode3());&#xD;
+kcontext.setVariable(&quot;ticketingNodeRuleFact&quot; , ticketingNodeRuleFact);</tns:script>
+        </tns:onExit-script>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_35</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_34</bpmn2:outgoing>
+    </bpmn2:businessRuleTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_34" tns:priority="1" name="" sourceRef="BusinessRuleTask_1" targetRef="EndEvent_6"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_5" name="" gatewayDirection="Converging">
+      <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_21</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_13</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_12" tns:priority="1" name="" sourceRef="ExclusiveGateway_5" targetRef="Task_2"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_4" name="" gatewayDirection="Diverging">
+      <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_13</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_18</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_13" tns:priority="2" name="No" sourceRef="ExclusiveGateway_4" targetRef="ExclusiveGateway_5">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_110" language="http://www.mvel.org/2.0">return true;</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_18" tns:priority="1" name="Yes" sourceRef="ExclusiveGateway_4" targetRef="ExclusiveGateway_9">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_109" language="http://www.java.com/java">return &quot;Yes&quot;.equalsIgnoreCase(visitSufficientToResolve);</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="CantTrain">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="CantTrainPendingOrders">
+      <bpmndi:BPMNShape id="BPMNShape_StartEvent_1" bpmnElement="_1">
+        <dc:Bounds height="36.0" width="36.0" x="10.0" y="162.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_1" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="490.0" y="155.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_2" bpmnElement="ExclusiveGateway_2" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="800.0" y="157.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_3" bpmnElement="ExclusiveGateway_3" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="1183.0" y="380.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_4" bpmnElement="ExclusiveGateway_4" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="1183.0" y="118.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_5" bpmnElement="ExclusiveGateway_5" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="1183.0" y="20.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_3" bpmnElement="Task_3">
+        <dc:Bounds height="50.0" width="110.0" x="960.0" y="379.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_6" bpmnElement="ExclusiveGateway_6" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="1916.0" y="683.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_6" bpmnElement="Task_6">
+        <dc:Bounds height="50.0" width="110.0" x="963.0" y="470.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_4" bpmnElement="Task_4">
+        <dc:Bounds height="50.0" width="110.0" x="1153.0" y="234.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_5" bpmnElement="Task_5">
+        <dc:Bounds height="50.0" width="110.0" x="600.0" y="157.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_2" bpmnElement="Task_2">
+        <dc:Bounds height="50.0" width="110.0" x="1423.0" y="20.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_7" bpmnElement="ExclusiveGateway_7" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="1515.0" y="379.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_8" bpmnElement="ExclusiveGateway_8" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="1916.0" y="379.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_1" bpmnElement="Task_1">
+        <dc:Bounds height="50.0" width="110.0" x="90.0" y="155.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_9" bpmnElement="Task_9">
+        <dc:Bounds height="50.0" width="110.0" x="270.0" y="155.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_11" bpmnElement="Task_11">
+        <dc:Bounds height="50.0" width="110.0" x="1325.0" y="380.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_9" bpmnElement="ExclusiveGateway_9" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="2052.0" y="143.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_8" bpmnElement="Task_8">
+        <dc:Bounds height="50.0" width="110.0" x="1734.0" y="262.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_10" bpmnElement="ExclusiveGateway_10" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="2052.0" y="580.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_5" bpmnElement="EndEvent_5">
+        <dc:Bounds height="36.0" width="36.0" x="2178.0" y="587.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_CallActivity_1" bpmnElement="CallActivity_1" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="2022.0" y="683.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_11" bpmnElement="ExclusiveGateway_11" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="2171.0" y="143.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_6" bpmnElement="EndEvent_6">
+        <dc:Bounds height="36.0" width="36.0" x="2530.0" y="150.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_7" bpmnElement="EndEvent_7">
+        <dc:Bounds height="36.0" width="36.0" x="2178.0" y="269.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_BusinessRuleTask_1" bpmnElement="BusinessRuleTask_1">
+        <dc:Bounds height="50.0" width="110.0" x="2340.0" y="143.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="BPMNShape_ExclusiveGateway_6" targetElement="BPMNShape_CallActivity_1">
+        <di:waypoint xsi:type="dc:Point" x="1967.0" y="708.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1991.0" y="708.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1991.0" y="708.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2022.0" y="708.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="SequenceFlow_7" sourceElement="BPMNShape_ExclusiveGateway_1" targetElement="BPMNShape_Task_5">
+        <di:waypoint xsi:type="dc:Point" x="541.0" y="180.0"/>
+        <di:waypoint xsi:type="dc:Point" x="580.0" y="180.0"/>
+        <di:waypoint xsi:type="dc:Point" x="580.0" y="182.0"/>
+        <di:waypoint xsi:type="dc:Point" x="600.0" y="182.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_8" bpmnElement="SequenceFlow_8" sourceElement="BPMNShape_Task_5" targetElement="BPMNShape_ExclusiveGateway_2">
+        <di:waypoint xsi:type="dc:Point" x="710.0" y="182.0"/>
+        <di:waypoint xsi:type="dc:Point" x="780.0" y="182.0"/>
+        <di:waypoint xsi:type="dc:Point" x="780.0" y="182.0"/>
+        <di:waypoint xsi:type="dc:Point" x="800.0" y="182.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_9" bpmnElement="SequenceFlow_9" sourceElement="BPMNShape_ExclusiveGateway_2" targetElement="BPMNShape_ExclusiveGateway_5">
+        <di:waypoint xsi:type="dc:Point" x="825.0" y="157.0"/>
+        <di:waypoint xsi:type="dc:Point" x="825.0" y="45.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1183.0" y="45.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_ExclusiveGateway_2" targetElement="BPMNShape_Task_3">
+        <di:waypoint xsi:type="dc:Point" x="825.0" y="208.0"/>
+        <di:waypoint xsi:type="dc:Point" x="825.0" y="404.0"/>
+        <di:waypoint xsi:type="dc:Point" x="960.0" y="404.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_6" sourceElement="BPMNShape_Task_3" targetElement="BPMNShape_ExclusiveGateway_3">
+        <di:waypoint xsi:type="dc:Point" x="1070.0" y="404.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1163.0" y="404.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1163.0" y="405.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1183.0" y="405.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_10" bpmnElement="SequenceFlow_10" sourceElement="BPMNShape_ExclusiveGateway_3" targetElement="BPMNShape_Task_4">
+        <di:waypoint xsi:type="dc:Point" x="1208.0" y="380.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1208.0" y="337.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1208.0" y="337.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1208.0" y="284.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_11" bpmnElement="SequenceFlow_11" sourceElement="BPMNShape_Task_4" targetElement="BPMNShape_ExclusiveGateway_4">
+        <di:waypoint xsi:type="dc:Point" x="1208.0" y="234.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1208.0" y="205.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1208.0" y="205.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1208.0" y="169.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_12" bpmnElement="SequenceFlow_12" sourceElement="BPMNShape_ExclusiveGateway_5" targetElement="BPMNShape_Task_2">
+        <di:waypoint xsi:type="dc:Point" x="1234.0" y="45.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1319.0" y="45.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1319.0" y="45.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1423.0" y="45.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_13" bpmnElement="SequenceFlow_13" sourceElement="BPMNShape_ExclusiveGateway_4" targetElement="BPMNShape_ExclusiveGateway_5">
+        <di:waypoint xsi:type="dc:Point" x="1208.0" y="118.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1208.0" y="97.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1208.0" y="97.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1208.0" y="71.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_14" bpmnElement="SequenceFlow_14" sourceElement="BPMNShape_ExclusiveGateway_2" targetElement="BPMNShape_Task_6">
+        <di:waypoint xsi:type="dc:Point" x="825.0" y="208.0"/>
+        <di:waypoint xsi:type="dc:Point" x="825.0" y="495.0"/>
+        <di:waypoint xsi:type="dc:Point" x="963.0" y="495.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_15" bpmnElement="SequenceFlow_15" sourceElement="BPMNShape_ExclusiveGateway_1" targetElement="BPMNShape_ExclusiveGateway_6">
+        <di:waypoint xsi:type="dc:Point" x="515.0" y="206.0"/>
+        <di:waypoint xsi:type="dc:Point" x="515.0" y="708.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1916.0" y="708.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_16" bpmnElement="SequenceFlow_16" sourceElement="BPMNShape_ExclusiveGateway_2" targetElement="BPMNShape_ExclusiveGateway_6">
+        <di:waypoint xsi:type="dc:Point" x="825.0" y="208.0"/>
+        <di:waypoint xsi:type="dc:Point" x="825.0" y="708.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1916.0" y="708.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_17" bpmnElement="SequenceFlow_17" sourceElement="BPMNShape_Task_6" targetElement="BPMNShape_ExclusiveGateway_6">
+        <di:waypoint xsi:type="dc:Point" x="1073.0" y="495.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1941.0" y="495.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1941.0" y="683.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_18" bpmnElement="SequenceFlow_18" sourceElement="BPMNShape_ExclusiveGateway_4" targetElement="BPMNShape_ExclusiveGateway_9">
+        <di:waypoint xsi:type="dc:Point" x="1234.0" y="143.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2077.0" y="143.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2077.0" y="143.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_19" bpmnElement="SequenceFlow_19" sourceElement="BPMNShape_Task_2" targetElement="BPMNShape_ExclusiveGateway_9">
+        <di:waypoint xsi:type="dc:Point" x="1533.0" y="45.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2077.0" y="45.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2077.0" y="143.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_20" bpmnElement="SequenceFlow_20" sourceElement="BPMNShape_ExclusiveGateway_3" targetElement="BPMNShape_Task_11">
+        <di:waypoint xsi:type="dc:Point" x="1234.0" y="405.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1274.0" y="405.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1274.0" y="405.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1325.0" y="405.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_24" bpmnElement="SequenceFlow_24" sourceElement="BPMNShape_Task_11" targetElement="BPMNShape_ExclusiveGateway_7">
+        <di:waypoint xsi:type="dc:Point" x="1435.0" y="405.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1471.0" y="405.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1471.0" y="404.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1515.0" y="404.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_25" bpmnElement="SequenceFlow_25" sourceElement="BPMNShape_ExclusiveGateway_7" targetElement="BPMNShape_ExclusiveGateway_8">
+        <di:waypoint xsi:type="dc:Point" x="1566.0" y="404.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1723.0" y="404.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1723.0" y="404.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1916.0" y="404.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_26" bpmnElement="SequenceFlow_26" sourceElement="BPMNShape_ExclusiveGateway_7" targetElement="BPMNShape_Task_8">
+        <di:waypoint xsi:type="dc:Point" x="1540.0" y="379.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1540.0" y="287.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1734.0" y="287.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="BPMNShape_ExclusiveGateway_8" targetElement="BPMNShape_ExclusiveGateway_6">
+        <di:waypoint xsi:type="dc:Point" x="1941.0" y="430.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1941.0" y="663.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1941.0" y="663.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1941.0" y="683.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_21" bpmnElement="SequenceFlow_21" sourceElement="BPMNShape_ExclusiveGateway_8" targetElement="BPMNShape_ExclusiveGateway_5">
+        <di:waypoint xsi:type="dc:Point" x="1941.0" y="379.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1941.0" y="0.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1208.0" y="0.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1208.0" y="20.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_32" bpmnElement="SequenceFlow_32" sourceElement="BPMNShape_Task_9" targetElement="BPMNShape_ExclusiveGateway_1">
+        <di:waypoint xsi:type="dc:Point" x="380.0" y="180.0"/>
+        <di:waypoint xsi:type="dc:Point" x="429.0" y="180.0"/>
+        <di:waypoint xsi:type="dc:Point" x="429.0" y="180.0"/>
+        <di:waypoint xsi:type="dc:Point" x="490.0" y="180.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_27" bpmnElement="SequenceFlow_27" sourceElement="BPMNShape_StartEvent_1" targetElement="BPMNShape_Task_1">
+        <di:waypoint xsi:type="dc:Point" x="46.0" y="180.0"/>
+        <di:waypoint xsi:type="dc:Point" x="65.0" y="180.0"/>
+        <di:waypoint xsi:type="dc:Point" x="65.0" y="180.0"/>
+        <di:waypoint xsi:type="dc:Point" x="90.0" y="180.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_29" bpmnElement="SequenceFlow_29" sourceElement="BPMNShape_Task_1" targetElement="BPMNShape_Task_9">
+        <di:waypoint xsi:type="dc:Point" x="200.0" y="180.0"/>
+        <di:waypoint xsi:type="dc:Point" x="231.0" y="180.0"/>
+        <di:waypoint xsi:type="dc:Point" x="231.0" y="180.0"/>
+        <di:waypoint xsi:type="dc:Point" x="270.0" y="180.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="BPMNShape_Task_8" targetElement="BPMNShape_ExclusiveGateway_9">
+        <di:waypoint xsi:type="dc:Point" x="1844.0" y="287.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2077.0" y="287.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2077.0" y="194.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_30" bpmnElement="SequenceFlow_30" sourceElement="BPMNShape_ExclusiveGateway_10" targetElement="BPMNShape_EndEvent_5">
+        <di:waypoint xsi:type="dc:Point" x="2103.0" y="605.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2136.0" y="605.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2136.0" y="605.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2178.0" y="605.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_31" bpmnElement="SequenceFlow_31" sourceElement="BPMNShape_CallActivity_1" targetElement="BPMNShape_ExclusiveGateway_10">
+        <di:waypoint xsi:type="dc:Point" x="2077.0" y="683.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2077.0" y="660.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2077.0" y="660.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2077.0" y="631.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_33" bpmnElement="SequenceFlow_33" sourceElement="BPMNShape_ExclusiveGateway_10" targetElement="BPMNShape_ExclusiveGateway_9">
+        <di:waypoint xsi:type="dc:Point" x="2077.0" y="580.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2077.0" y="407.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2077.0" y="407.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2077.0" y="194.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_34" bpmnElement="SequenceFlow_34" sourceElement="BPMNShape_BusinessRuleTask_1" targetElement="BPMNShape_EndEvent_6">
+        <di:waypoint xsi:type="dc:Point" x="2450.0" y="168.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2486.0" y="168.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2486.0" y="168.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2530.0" y="168.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_35" bpmnElement="SequenceFlow_35" sourceElement="BPMNShape_ExclusiveGateway_11" targetElement="BPMNShape_BusinessRuleTask_1">
+        <di:waypoint xsi:type="dc:Point" x="2222.0" y="168.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2275.0" y="168.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2275.0" y="168.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2340.0" y="168.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_36" bpmnElement="SequenceFlow_36" sourceElement="BPMNShape_ExclusiveGateway_9" targetElement="BPMNShape_ExclusiveGateway_11">
+        <di:waypoint xsi:type="dc:Point" x="2103.0" y="168.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2133.0" y="168.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2133.0" y="168.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2171.0" y="168.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_37" bpmnElement="SequenceFlow_37" sourceElement="BPMNShape_ExclusiveGateway_11" targetElement="BPMNShape_EndEvent_7">
+        <di:waypoint xsi:type="dc:Point" x="2196.0" y="194.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2196.0" y="249.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2196.0" y="249.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2196.0" y="269.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

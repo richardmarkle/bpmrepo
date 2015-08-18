@@ -1,0 +1,19 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+
+[
+  //  Synacor ISP Email Status work item
+  //  Source Synacor webservice :  getAccountRoles()  & getFullUserProfile() APIs
+  [
+    "name" : "SynacorEmail",
+    "parameters" : [
+    ],
+    "results" : [
+       "isErrored" : new BooleanDataType(),
+       "emailSuspended" : new BooleanDataType()
+     ], 
+    "displayName" : "Synacor Email Status",
+    "icon" : "icons/synacor-email.gif"
+  ]
+]

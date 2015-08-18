@@ -1,0 +1,17 @@
+package com.bpm.fsr.rules;
+
+import com.bpm.fsr.model.AcceptableRatesRuleFact;
+
+rule "SlowSpeedActualsMissingRule"
+	dialect "mvel"
+	ruleflow-group "ActualAndProvisionedAndPurchasedRatesRule"
+	no-loop true
+	    when
+ 			acceptableRatesRuleFact : AcceptableRatesRuleFact( isActualRatesPresent == false   )
+ 	    then
+	    	acceptableRatesRuleFact.setPath( "Actuals Missing" );
+	    
+end
+
+
+

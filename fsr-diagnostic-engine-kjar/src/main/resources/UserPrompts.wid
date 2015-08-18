@@ -1,0 +1,326 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+
+[
+  [
+    "name" : "UTDetailsWithInstructions",
+    "parameters" : [
+        "template" : new StringDataType(),
+        "header" : new StringDataType(),
+        "attribute1" : new StringDataType(),
+        "attribute2" : new StringDataType(),
+        "attribute3" : new StringDataType(),
+        "attribute4" : new StringDataType(),
+        "value1" : new StringDataType(),
+        "value2" : new StringDataType(),
+        "value3" : new StringDataType(),
+        "value4" : new StringDataType(),
+        "instructionHtml" : new StringDataType(),
+	    "flowName" : new StringDataType(),
+	    "docspecPath" : new StringDataType(),
+	    "node0" : new StringDataType()
+    ],
+    "displayName" : "UTDetailsWithInstructions",
+    "category" : "User Templates",
+    "icon" : "type.user.png"
+  ],
+
+  [
+    "name" : "UTHtmlInstruction",
+    "parameters" : [
+        "template" : new StringDataType(),
+        "userPromptId" : new StringDataType(),
+        "header" : new StringDataType(),
+        "instructionHtml" : new StringDataType(),
+	    "flowName" : new StringDataType(),
+	    "docspecPath" : new StringDataType(),
+	    "node0" : new StringDataType()
+    ],
+  "results" : [
+      "userPromptId" : new StringDataType()                             
+  ],    
+    "displayName" : "UTHtmlInstruction",
+    "category" : "User Templates",
+    "icon" : "type.user.png"    
+  ],
+
+ [
+     "name" : "UTInstructionQuestion",
+     "category" : "User Templates",     
+     "parameters" : [
+        "template" : new StringDataType(),
+        "header" : new StringDataType(),
+        "instructionHtml" : new StringDataType(),
+        "flowName" : new StringDataType(),
+        "question" : new StringDataType(),
+        "options" : new StringDataType(),
+        "nextButtonLabel" : new StringDataType(),
+	    "docspecPath" : new StringDataType(),
+	    "node0" : new StringDataType()
+    ],
+     "results" : [
+         "optionChosen" : new StringDataType(),
+    ],
+     "displayName" : "UTInstructionQuestion",
+     "icon" : "type.user.png"
+ ],
+ 
+[
+     "name" : "UTInstructionRefresh",
+     "category" : "User Templates",     
+     "parameters" : [
+        "template" : new StringDataType(),
+        "header" : new StringDataType(),
+        "instructionHtml" : new StringDataType(),
+        "flowName" : new StringDataType(),
+	    "docspecPath" : new StringDataType(),
+	    "node0" : new StringDataType()
+    ],
+     "displayName" : "UTInstructionRefresh",
+     "icon" : "type.user.png"
+ ],
+
+  [
+     "name" : "UTInstructionMultiQuestion",
+     "category" : "User Templates",     
+     "parameters" : [
+        "template" : new StringDataType(),
+        "header" : new StringDataType(),
+        "instructionHtml" : new StringDataType(),
+        "flowName" : new StringDataType(),
+        "prompt1" : new StringDataType(),
+        "options1" : new StringDataType(),
+        "prompt2" : new StringDataType(),
+        "options2" : new StringDataType(),
+         "prompt3" : new StringDataType(),
+        "options3" : new StringDataType(),
+        "nextButtonLabel" : new StringDataType(),
+	    "docspecPath" : new StringDataType(),
+	    "node0" : new StringDataType()
+    ],
+    
+     "results" : [
+         "optionChosen1" : new StringDataType(),
+         "optionChosen2" : new StringDataType(),
+         "optionChosen3" : new StringDataType(),
+    ],
+     "displayName" : "UTInstructionMultiQuestion",
+     "icon" : "type.user.png"
+ ],
+
+ [
+     "name" : "UTInstructionSubmit",
+     "category" : "User Templates",          
+     "parameters" : [
+        "template" : new StringDataType(),
+        "header" : new StringDataType(),
+        "instructionHtml" : new StringDataType(),
+        "flowName" : new StringDataType(),
+        "submitBtnLabel" : new StringDataType(),
+	    "docspecPath" : new StringDataType(),
+	    "node0" : new StringDataType()
+    ],
+     "displayName" : "UTInstructionSubmit",
+     "icon" : "type.user.png"
+ ],
+
+ [
+     "name" : "UTInstructionNoExit",
+     "category" : "User Templates",     
+     "parameters" : [
+        "template" : new StringDataType(),
+        "header" : new StringDataType(),
+        "instructionHtml" : new StringDataType(),
+        "flowName" : new StringDataType(),
+        "nextBtnLabel" : new StringDataType(),
+	    "docspecPath" : new StringDataType(),
+	    "node0" : new StringDataType()
+    ],
+     "displayName" : "UTInstructionNoExit",
+     "icon" : "type.user.png"
+ ],
+
+ [
+     "name" : "UTInstructionAndSurvey",
+     "category" : "User Templates",     
+     "parameters" : [
+        "userPromptId" : new StringDataType(),
+        "template" : new StringDataType(),
+        "header" : new StringDataType(),
+        "instructionHtml" : new StringDataType(),
+        "flowName" : new StringDataType(),
+        "nextButtonLabel" : new StringDataType(),
+	    "docspecPath" : new StringDataType(),
+	    "node0" : new StringDataType()
+    ],
+    
+     "results" : [
+         "answer" : new StringDataType(),
+    ],
+     "displayName" : "UTInstructionAndSurvey",
+     "icon" : "type.user.png"
+ ],
+
+    
+ [
+     "name" : "UTDropDownText",
+     "category" : "User Templates",
+     "parameters" : [
+        "template" : new StringDataType(),
+        "header" : new StringDataType(),
+        "instructionHtml" : new StringDataType(),
+        "dropDownPrompt" : new StringDataType(),
+         "dropDownOptions" : new StringDataType(),
+         "showTextBox" : new BooleanDataType(),
+        "flowName" : new StringDataType(),
+        "nextBtnLabel" : new StringDataType(),
+	    "docspecPath" : new StringDataType(),
+	    "node0" : new StringDataType()
+    ],
+     "results" : [
+        "dropDownChoice" : new StringDataType(),
+        "textBoxContents" : new StringDataType(),
+    ],
+     "displayName" : "UTDropDownText",
+     "icon" : "type.user.png"
+ ],
+
+ [
+     "name" : "UTPromptTwoLevelDropDown",
+     "category" : "User Templates",
+     "parameters" : [
+        "template" : new StringDataType(),
+        "instructionHtml" : new StringDataType(),
+        "mainPrompt" : new StringDataType(),
+        "mainOptions" : new StringDataType(),
+        "dependentPrompt" : new StringDataType(),
+        "flowName" : new StringDataType(),
+	    "docspecPath" : new StringDataType(),
+	    "node0" : new StringDataType()
+    ],
+     "results" : [
+        "mainChoice" : new StringDataType(),
+        "dependentChoice" : new StringDataType(),
+    ],
+     "displayName" : "UTPromptTwoLevelDropDown",
+     "icon" : "type.user.png"
+ ],
+ 
+   [
+    "name" : "UTDetailsWithInstructionsQuestion",
+    "parameters" : [
+        "template" : new StringDataType(),
+        "attribute1" : new StringDataType(),
+        "attribute2" : new StringDataType(),
+        "value1" : new StringDataType(),
+        "value2" : new StringDataType(),
+        "instructionHtml" : new StringDataType(),
+        "question" : new StringDataType(),        
+        "options" : new StringDataType(),
+        "next" : new StringDataType(),
+        "flowName" : new StringDataType(),
+        "docspecPath" : new StringDataType(),
+        "node0" : new StringDataType()
+    ],
+     "results" : [
+         "optionChosen" : new StringDataType(),
+    ],
+    "displayName" : "UTDetailsWithInstructionsQuestion",
+    "category" : "User Templates",
+    "icon" : "type.user.png"
+  ],
+ 
+ [
+     "name" : "UTInstructionVerticalQuestion",
+     "category" : "User Templates",     
+     "parameters" : [
+        "template" : new StringDataType(),
+        "instructionHtml" : new StringDataType(),
+        "flowName" : new StringDataType(),
+        "question" : new StringDataType(),
+        "options" : new StringDataType(),
+        "next" : new StringDataType()
+    ],
+     "results" : [
+         "optionChosen" : new StringDataType(),
+    ],
+     "displayName" : "UTInstructionVerticalQuestion",
+     "icon" : "type.user.png"
+ ], 
+  
+[
+     "name" : "UTReasonForCall",
+     "category" : "User Templates",     
+     "parameters" : [
+        "template" : new StringDataType(),
+        "instructionHtml" : new StringDataType(),
+        "question" : new StringDataType(),
+        "optout" : new StringDataType(),
+        "flowName" : new StringDataType()
+    ],
+     "results" : [
+         "answer" : new StringDataType(),
+         "exitReason" : new StringDataType()
+    ],
+    "displayName" : "UTReasonForCall",
+     "icon" : "type.user.png"
+],
+
+[
+  "name" : "UTEarlyExit",
+  "category" : "User Templates",
+  "parameters" : [
+     "userPromptId" : new StringDataType(),              
+     "template" : new StringDataType(),
+     "header" : new StringDataType(),
+     "instructionHtml" : new StringDataType(),
+     "dropDownPrompt" : new StringDataType(),
+      "dropDownOptions" : new StringDataType(),
+      "showTextBox" : new BooleanDataType(),
+     "flowName" : new StringDataType(),
+     "nextBtnLabel" : new StringDataType(),
+ ],
+  "results" : [
+     "userPromptId" : new StringDataType(),                            
+     "dropDownChoice" : new StringDataType(),
+     "textBoxContents" : new StringDataType(),
+ ],
+  "displayName" : "UTEarlyExit",
+  "icon" : "type.user.png"
+],
+
+[
+
+  "name" : "UTOpenApplicationView",
+
+  "category" : "User Templates",     
+
+  "parameters" : [
+
+     "userPromptId" : new StringDataType(),              
+
+     "header" : new StringDataType(),
+
+     "applicationView" : new StringDataType(),
+
+     "message" : new StringDataType(),
+
+     "flowName" : new StringDataType(),
+
+     "next" : new StringDataType(),
+
+],
+
+  "results" : [
+
+      "userPromptId" : new StringDataType(),                             
+
+ ],
+
+  "displayName" : "UTOpenView",
+
+  "icon" : "type.user.png"
+
+]
+  
+]

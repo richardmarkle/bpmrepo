@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.bpm.fsr</groupId>
+	<artifactId>fsr-diagnostic-engine-kjar</artifactId>
+	<version>1.2.42</version>
+	<packaging>kjar</packaging>
+	<name>fsr-diagnostic-engine-kjar</name>
+	<description>fsr-diagnostic-engine-kjar</description>
+	<properties>
+		<jboss.javaee.version>1.0.0.Final</jboss.javaee.version>
+		<seam.tx.version>3.1.0.Final</seam.tx.version>
+		<drools.version>6.1.0.Final</drools.version>
+		<slf4j.version>1.6.4</slf4j.version>
+		<solder.version>3.2.0.Final</solder.version>
+		<!-- <btm.version>2.1.2</btm.version> -->
+		<h2.version>1.3.161</h2.version>
+		<jbpm.version>6.1.0.Final</jbpm.version>
+		<arquillian.weld.version>1.0.0.CR7</arquillian.weld.version>
+		<arquillian.bom.version>1.1.0.Final</arquillian.bom.version>
+		<hibernate.version>4.2.0.Final</hibernate.version>
+		<logback.version>1.0.9</logback.version>
+		<hibernate.core.version>4.2.0.Final</hibernate.core.version>
+	   	<timestamp>${maven.build.timestamp}</timestamp>
+   		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+	</properties>
+	<scm>
+		<connection>
+			scm:dimensions://rxfldim:Cntl2015@lxdenvmap434.qintra.com:671/it4000@scm5/ER_RXFLOWS:BIZ_LOGIC/BizLogic/kjar
+		</connection>
+		<developerConnection>
+			scm:dimensions://rxfldim:Cntl2015@lxdenvmap434.qintra.com:671/it4000@scm5/ER_RXFLOWS:BIZ_LOGIC/BizLogic/kjar
+		</developerConnection>
+		<url>http://lxdenvmap434.qintra.com:8080/dimensions</url>
+	</scm>
+	<dependencies>
+		<dependency>
+			<groupId>com.bpm.fsr</groupId>
+			<artifactId>fsr-diagnostic-engine-workitems</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-api</artifactId>
+			<version>${jbpm.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-flow</artifactId>
+			<version>${jbpm.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-bpmn2</artifactId>
+			<version>${jbpm.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-flow-builder</artifactId>
+			<version>${jbpm.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-runtime-manager</artifactId>
+			<version>${jbpm.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-human-task-core</artifactId>
+			<version>${jbpm.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-human-task-jpa</artifactId>
+			<version>${jbpm.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-audit</artifactId>
+			<version>${jbpm.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-decisiontables</artifactId>
+			<version>${drools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-test</artifactId>
+			<version>${jbpm.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<version>1.0-SP4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.weld.se</groupId>
+			<artifactId>weld-se-core</artifactId>
+			<version>1.1.13.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.3.168</version>
+		</dependency>
+		<!-- <dependency> <groupId>org.codehaus.btm</groupId> <artifactId>btm</artifactId> 
+			<version>${btm.version}</version> </dependency> -->
+		<dependency>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-container</artifactId>
+			<version>1.1.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.container</groupId>
+			<artifactId>arquillian-weld-se-embedded-1.1</artifactId>
+			<version>${arquillian.weld.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.spec.javax.jms</groupId>
+			<artifactId>jboss-jms-api_1.1_spec</artifactId>
+			<version>1.0.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.5</version>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>guvnor-m2-repo</id>
+			<name>Guvnor M2 Repo</name>
+			<url>http://151.117.209.171:11501/business-central/maven2/</url>
+		</repository>
+		<repository>
+			<id>jboss</id>
+			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>com.bpm.fsr</groupId>
+				<artifactId>gdst-rdrl-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>gdst-rdrl</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-scm-plugin</artifactId>
+				<version>1.5</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.scm</groupId>
+						<artifactId>maven-scm-provider-dimensions</artifactId>
+						<version>1.5</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			    <configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
+					<executable>${env.JAVA_HOME_6}/bin/javac</executable>
+					<fork>true</fork>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.kie</groupId>
+				<artifactId>kie-maven-plugin</artifactId>
+				<version>${jbpm.version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<forkMode>always</forkMode>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>${basedir}</directory>
+							<includes>
+								<include>btm*.tlog</include>
+							</includes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>publish-kjar</id>
+			<build>
+				<plugins>
+					<plugin>
+					
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.8</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<configuration>
+									<tasks>
+										<delete dir="target/fsr-diagnostic-engine-model" />
+										<delete dir="target/fsr-diagnostic-engine-kjar" />
+										<delete dir="target/fsr-diagnostic-engine-workitems" />
+
+										<mkdir dir="target/fsr-diagnostic-engine-model" />
+										<copy todir="target/fsr-diagnostic-engine-model">
+											<fileset dir="target/classes">
+												<include name="**/*.class" />
+											</fileset>
+										</copy>
+										<mkdir dir="target/fsr-diagnostic-engine-kjar" />
+										<copy todir="target/fsr-diagnostic-engine-kjar">
+											<fileset dir="target/classes">
+												<exclude name="**/*.class" />
+												<exclude name="**/*.gdst" />
+											</fileset>
+										</copy>
+									</tasks>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jar-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>copy-model</id>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+								<configuration>
+									<finalName>rx-9.2.0-recommender-model</finalName>
+									<classesDirectory>${project.build.directory}/fsr-diagnostic-engine-model/</classesDirectory>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>copy-kjar</id>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+								<configuration>
+									<finalName>rx-9.2.0-recommender-kjar</finalName>
+									<classesDirectory>${project.build.directory}/fsr-diagnostic-engine-kjar/</classesDirectory>
+								</configuration>
+							</execution>
+							
+
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+
+</project>

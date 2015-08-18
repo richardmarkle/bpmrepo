@@ -1,0 +1,14 @@
+package com.bpm.fsr.rules;
+
+import com.bpm.fsr.model.ModemProtocolRuleFact;
+
+rule "ModemProtocolCRISPPPoERule"
+	dialect "mvel"
+	ruleflow-group "ModemProtocolRule"
+	no-loop true
+	    when
+ 			modemProtocolRuleFact : ModemProtocolRuleFact( legacyMarket == "CRIS" , protocol not in ("IPoE", "DHCP"), prismOnAccount == false, improvStaticIPPresent == false )
+ 	    then
+	    	modemProtocolRuleFact.setlCRISPPPoE( true );
+	    
+end

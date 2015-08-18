@@ -1,0 +1,22 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+
+[
+  //  Customer Experience work item	
+  // Source:  Customer Experience Page  
+  [
+    "name" : "CustomerExperience",
+    "parameters" : [
+    ],
+    "results" : [
+       "isErrored" : new BooleanDataType(),
+       "actualLineError"  : new IntegerDataType(),
+       "congestionIncidentReported" : new BooleanDataType,
+       "cesPortTrainUp" : new IntegerDataType(),
+       "cesPortTrainDown" : new IntegerDataType()
+     ], 
+    "displayName" : "CustomerExperience",
+    "icon" : "icons/customer-experience.gif"
+  ]
+]
